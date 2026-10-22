@@ -13,17 +13,24 @@ namespace ApexCardio
         public int[] ECG2Array;
         public int[] Reo1Array;
         public int[] Reo2Array;
-        public int[] Sphigmo1Array;
-        public int[] Sphigmo2Array;
+        public int[] SphigmoLeftHandArray;
+        public int[] SphigmoLeftLegArray;
+        public int[] SphigmoRightHandArray;
+        public int[] SphigmoRightLegArray;
         public int[] ApexArray;
+        public int[] PPGArray;
 
         public int[] ECG1ViewArray;
         public int[] ECG2ViewArray;
         public int[] Reo1ViewArray;
         public int[] Reo2ViewArray;
-        public int[] Sphigmo1ViewArray;
-        public int[] Sphigmo2ViewArray;
+        public int[] SphigmoLeftHandViewArray;
+        public int[] SphigmoLeftLegViewArray;
+        public int[] SphigmoRightHandViewArray;
+        public int[] SphigmoRightLegViewArray;
         public int[] ApexViewArray;
+        public int[] ApexPPGArray;
+        public short[] SoundArray;
 
         public List<int[]> ViewList;
         
@@ -31,15 +38,27 @@ namespace ApexCardio
         public int[] RArray;
         public int RInd;
         public int FragSize;
-
+        public byte NIBP1_Syst;
+        public byte NIBP1_Diast;
+        public ushort NIBP1_Press;
+        public byte NIBP2_Syst;
+        public byte NIBP2_Diast;
+        public ushort NIBP2_Press;
+        public byte NIBP3_Syst;
+        public byte NIBP3_Diast;
+        public ushort NIBP3_Press;
+        public byte NIBP4_Syst;
+        public byte NIBP4_Diast;
+        public ushort NIBP4_Press;
+        public int DeviceStatus;
     public DataArrays(int size)
         {
             ECG1Array = new int[size];
             ECG2Array = new int[size];
             Reo1Array = new int[size];
             Reo2Array = new int[size];
-            Sphigmo1Array = new int[size];
-            Sphigmo2Array = new int[size];
+            SphigmoLeftHandArray = new int[size];
+            SphigmoLeftLegArray = new int[size];
             ApexArray = new int[size];
 
             
@@ -47,17 +66,22 @@ namespace ApexCardio
             ECG2ViewArray = new int[size];
             Reo1ViewArray = new int[size];
             Reo2ViewArray = new int[size];
-            Sphigmo1ViewArray = new int[size];
-            Sphigmo2ViewArray = new int[size];
+            SphigmoLeftHandViewArray = new int[size];
+            SphigmoLeftLegViewArray = new int[size];
+            SphigmoRightHandViewArray = new int[size];
+            SphigmoRightLegViewArray = new int[size];
             ApexViewArray = new int[size];
+            SoundArray = new short[size * 8];
 
             ViewList = new List<int[]>();
             ViewList.Add(ECG1ViewArray);
             ViewList.Add(ECG2ViewArray);
             ViewList.Add(Reo1ViewArray);
             ViewList.Add(Reo2ViewArray);
-            ViewList.Add(Sphigmo1ViewArray);
-            ViewList.Add(Sphigmo2ViewArray);
+            ViewList.Add(SphigmoLeftHandViewArray);
+            ViewList.Add(SphigmoLeftLegViewArray);
+            ViewList.Add(SphigmoRightHandViewArray);
+            ViewList.Add(SphigmoRightLegViewArray);
             ViewList.Add(ApexViewArray);
 
             RArray = new int[RRMaxNum];
@@ -99,6 +123,8 @@ namespace ApexCardio
         private int Reo2tmp;
         private int Sphigmo1tmp;
         private int Sphigmo2tmp;
+        private int Sphigmo3tmp;
+        private int Sphigmo4tmp;
         private int Apextmp;
 
         private int nextECG1;
@@ -107,6 +133,8 @@ namespace ApexCardio
         private int nextReo2;
         private int nextSphigmo1;
         private int nextSphigmo2;
+        private int nextSphigmo3;
+        private int nextSphigmo4;
         private int nextApex;
 
         private double detrendECG1 = 0;
@@ -115,6 +143,8 @@ namespace ApexCardio
         private double detrendReo2 = 0;
         private double detrendSphigmo1 = 0;
         private double detrendSphigmo2 = 0;
+        private double detrendSphigmo3 = 0;
+        private double detrendSphigmo4 = 0;
         private double detrendApex = 0;
 
         private int prevECG1;
@@ -123,6 +153,8 @@ namespace ApexCardio
         private int prevReo2;
         private int prevSphigmo1;
         private int prevSphigmo2;
+        private int prevSphigmo3;
+        private int prevSphigmo4;
         private int prevApex;
 
         public int PrSYS1;
@@ -230,358 +262,394 @@ namespace ApexCardio
             ProcessData(Data.ECG2Array, Data.ECG2ViewArray, size, f, Filter.coeff50);
             ProcessData(Data.Reo1Array, Data.Reo1ViewArray, size, f, Filter.coeff14);
             ProcessData(Data.Reo2Array, Data.Reo2ViewArray, size, f, Filter.coeff14);
-            ProcessData(Data.Sphigmo1Array, Data.Sphigmo1ViewArray, size, f, Filter.coeff14);
-            ProcessData(Data.Sphigmo2Array, Data.Sphigmo2ViewArray, size, f, Filter.coeff14);
+            ProcessData(Data.SphigmoLeftHandArray, Data.SphigmoLeftHandViewArray, size, f, Filter.coeff14);
+            ProcessData(Data.SphigmoLeftLegArray, Data.SphigmoLeftLegViewArray, size, f, Filter.coeff14);
             ProcessData(Data.ApexArray, Data.ApexViewArray, size, f, Filter.coeff14);
+        }
+
+        private void ApplyDSPFilters(ApexConfig cfg)
+        {
+            bool filterOn = cfg != null && cfg.FilterOn;
+
+            // --- ЭКГ 1 (L-R) ---
+            nextECG1 = Data.ECG1Array[MainIndex];
+            if (filterOn)
+            {
+                nextECG1 = Filter.filter(Filter.coeff50, Data.ECG1Array, MainIndex);
+            }
+            detrendECG1 = FilterRecursDetrend(filterCoeff, nextECG1, detrendECG1, prevECG1);
+            Data.ECG1ViewArray[MainIndex] = (int)Math.Round(detrendECG1);
+            prevECG1 = nextECG1;
+
+            // --- ЭКГ 2 (F-R) ---
+            nextECG2 = Data.ECG2Array[MainIndex];
+            if (filterOn)
+            {
+                nextECG2 = Filter.filter(Filter.coeff50, Data.ECG2Array, MainIndex);
+            }
+            detrendECG2 = FilterRecursDetrend(filterCoeff, nextECG2, detrendECG2, prevECG2);
+            Data.ECG2ViewArray[MainIndex] = (int)Math.Round(detrendECG2);
+            prevECG2 = nextECG2;
+
+            // --- Реограмма 1 ---
+            // Для фильтра передаем модуль значения (как в исходной логике)
+            nextReo1 = Math.Abs(Data.Reo1Array[MainIndex]);
+            if (filterOn)
+            {
+                nextReo1 = Filter.filter(Filter.coeff14, Data.Reo1Array, MainIndex);
+            }
+            detrendReo1 = FilterRecursDetrend(filterCoeffReo, nextReo1, detrendReo1, prevReo1);
+            Data.Reo1ViewArray[MainIndex] = (int)Math.Round(detrendReo1);
+            prevReo1 = nextReo1;
+
+            // --- Реограмма 2 ---
+            nextReo2 = Math.Abs(Data.Reo2Array[MainIndex]);
+            if (filterOn)
+            {
+                nextReo2 = Filter.filter(Filter.coeff14, Data.Reo2Array, MainIndex);
+            }
+            detrendReo2 = FilterRecursDetrend(filterCoeffReo, nextReo2, detrendReo2, prevReo2);
+            // Пишется со знаком минус на отображение
+            Data.Reo2ViewArray[MainIndex] = -(int)Math.Round(detrendReo2);
+            prevReo2 = nextReo2;
+
+            // --- Сфигмограмма 1 (Левая Рука) ---
+            nextSphigmo1 = Data.SphigmoLeftHandArray[MainIndex];
+            if (filterOn)
+            {
+                nextSphigmo1 = Filter.filter(Filter.coeff14, Data.SphigmoLeftHandArray, MainIndex);
+            }
+            detrendSphigmo1 = FilterRecursDetrend(filterCoeff, nextSphigmo1, detrendSphigmo1, prevSphigmo1);
+            Data.SphigmoLeftHandViewArray[MainIndex] = (int)Math.Round(detrendSphigmo1);
+            prevSphigmo1 = nextSphigmo1;
+
+            // --- Сфигмограмма 2 (Левая Нога) ---
+            nextSphigmo2 = Data.SphigmoLeftLegArray[MainIndex];
+            if (filterOn)
+            {
+                nextSphigmo2 = Filter.filter(Filter.coeff14, Data.SphigmoLeftLegArray, MainIndex);
+            }
+            detrendSphigmo2 = FilterRecursDetrend(filterCoeff, nextSphigmo2, detrendSphigmo2, prevSphigmo2);
+            Data.SphigmoLeftLegViewArray[MainIndex] = (int)Math.Round(detrendSphigmo2);
+            prevSphigmo2 = nextSphigmo2;
+
+            // --- Сфигмограмма 3 (Правая Рука) ---
+            // Используем новые переменные делей-фильтра (убедитесь, что они объявлены в полях класса)
+            nextSphigmo3 = Data.SphigmoRightHandArray[MainIndex];
+            if (filterOn)
+            {
+                nextSphigmo3 = Filter.filter(Filter.coeff14, Data.SphigmoRightHandArray, MainIndex);
+            }
+            detrendSphigmo3 = FilterRecursDetrend(filterCoeff, nextSphigmo3, detrendSphigmo3, prevSphigmo3);
+            Data.SphigmoRightHandViewArray[MainIndex] = (int)Math.Round(detrendSphigmo3);
+            prevSphigmo3 = nextSphigmo3;
+
+            // --- Сфигмограмма 4 (Правая Нога) ---
+            nextSphigmo4 = Data.SphigmoRightLegArray[MainIndex];
+            if (filterOn)
+            {
+                nextSphigmo4 = Filter.filter(Filter.coeff14, Data.SphigmoRightLegArray, MainIndex);
+            }
+            detrendSphigmo4 = FilterRecursDetrend(filterCoeff, nextSphigmo4, detrendSphigmo4, prevSphigmo4);
+            Data.SphigmoRightLegViewArray[MainIndex] = (int)Math.Round(detrendSphigmo4);
+            prevSphigmo4 = nextSphigmo4;
+
+            // --- Апекскардиограмма ---
+            nextApex = Data.ApexArray[MainIndex];
+            if (filterOn)
+            {
+                nextApex = Filter.filter(Filter.coeff14, Data.ApexArray, MainIndex);
+            }
+            detrendApex = FilterRecursDetrend(filterCoeff, nextApex, detrendApex, prevApex);
+            Data.ApexViewArray[MainIndex] = (int)Math.Round(detrendApex);
+            prevApex = nextApex;
+
+            // --- Фотоплетизмограмма (PPG) ---
+            // Записываем отфильтрованное или сырое значение в отображаемый массив ApexPPGArray
+            Data.ApexPPGArray[MainIndex] = Data.PPGArray[MainIndex];
+        }
+
+        private void ParseFullPacket(ReadOnlySpan<byte> packet, ApexConfig cfg)
+        {
+            // 1. Чтение 24-битных знаковых данных (ЭКГ, Рео, Сфигмо, Апекс, PPG)
+            Data.ECG1Array[MainIndex] = ReadInt24LE(packet.Slice(2, 3));
+            Data.ECG2Array[MainIndex] = ReadInt24LE(packet.Slice(5, 3));
+
+            // Реограммы (с ограничением и инверсией)
+            int reo1 = ReadInt24LE(packet.Slice(8, 3));
+            Data.Reo1Array[MainIndex] = -(reo1 > ApexConstants.ReoMaxVal ? ApexConstants.ReoMaxVal : reo1);
+
+            int reo2 = ReadInt24LE(packet.Slice(11, 3));
+            Data.Reo2Array[MainIndex] = -(reo2 > ApexConstants.ReoMaxVal ? ApexConstants.ReoMaxVal : reo2);
+
+            // Сфигмограммы и Апекс
+            Data.SphigmoLeftHandArray[MainIndex] = ReadInt24LE(packet.Slice(14, 3));
+            Data.SphigmoLeftLegArray[MainIndex] = ReadInt24LE(packet.Slice(17, 3));
+            Data.SphigmoRightHandArray[MainIndex] = ReadInt24LE(packet.Slice(20, 3));
+            Data.SphigmoRightLegArray[MainIndex] = ReadInt24LE(packet.Slice(23, 3));
+            Data.ApexArray[MainIndex] = ReadInt24LE(packet.Slice(26, 3));
+            Data.PPGArray[MainIndex] = ReadInt24LE(packet.Slice(29, 3));
+
+            // Накатываем фильтры и детрендинг для отображения (View)
+            ApplyDSPFilters(cfg);
+
+            // 2. Чтение 16-битных данных звука микрофона (8 отсчетов по 2 байта)
+            uint soundIdx = MainIndex << 3;
+            int soundOffset = 32;
+            for (int j = 0; j < 8; j++)
+            {
+                Data.SoundArray[soundIdx + j] = System.Buffers.Binary.BinaryPrimitives.ReadInt16LittleEndian(packet.Slice(soundOffset, 2));
+                soundOffset += 2;
+            }
+
+            // 3. Чтение блоков давления и статуса (только если пакет длинный — 67 байт)
+            if (packet.Length == 67)
+            {
+                Data.NIBP1_Syst = packet[48]; Data.NIBP1_Diast = packet[49];
+                Data.NIBP1_Press = System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(packet.Slice(50, 2));
+
+                Data.NIBP2_Syst = packet[52]; Data.NIBP2_Diast = packet[53];
+                Data.NIBP2_Press = System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(packet.Slice(54, 2));
+
+                Data.NIBP3_Syst = packet[56]; Data.NIBP3_Diast = packet[57];
+                Data.NIBP3_Press = System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(packet.Slice(58, 2));
+
+                Data.NIBP4_Syst = packet[60]; Data.NIBP4_Diast = packet[61];
+                Data.NIBP4_Press = System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(packet.Slice(62, 2));
+
+                // 3-байтовый статус
+                Data.DeviceStatus = packet[64] | (packet[65] << 8) | (packet[66] << 16);
+                ProcessDeviceStatus(); // Выносим логику насосов и OnBPcompleted сюда
+            }
+        }
+
+        private void ProcessDeviceStatus()
+        {
+            // Извлекаем код состояния из младшего байта
+            byte statusCode = (byte)(Data.DeviceStatus & 0xFF);
+            DeviceStatusId currentStatus = (DeviceStatusId)statusCode;
+
+            // --- Интеграция с вашей старой логикой компрессоров (по битовым маскам) ---
+            BP1measStarted = ((Data.DeviceStatus & bp1progress) != 0);
+            BP2measStarted = ((Data.DeviceStatus & bp2progress) != 0);
+
+            // Модуль давления 1 (Левая рука)
+            if (Pump1Started && (Data.DeviceStatus & pump1progress) != 0) Pump1RealyStarted = true;
+            if (Pump1RealyStarted) Data.SphigmoLeftHandViewArray[MainIndex] = 0;
+            if (Pump1RealyStarted && (Data.DeviceStatus & pump1progress) == 0)
+            {
+                if (++DelayCounter1 > MaxDelayCounter)
+                {
+                    Pump1Started = false; Pump1RealyStarted = false; detrendSphigmo1 = 0; DelayCounter1 = 0;
+                }
+            }
+
+            // Модуль давления 2 (Левая нога)
+            if (Pump2Started && (Data.DeviceStatus & pump2progress) != 0) Pump2RealyStarted = true;
+            if (Pump2RealyStarted)
+            {
+                detrendSphigmo2 = 0;
+                Data.SphigmoLeftLegViewArray[MainIndex] = (int)Math.Round(detrendSphigmo2);
+            }
+            if (Pump2RealyStarted && (Data.DeviceStatus & pump2progress) == 0)
+            {
+                if (++DelayCounter2 > MaxDelayCounter)
+                {
+                    Pump2Started = false; Pump2RealyStarted = false; detrendSphigmo2 = 0; DelayCounter2 = 0;
+                }
+            }
+
+            // --- Новая логика обработки состояний прибора на основе таблицы ---
+            switch (currentStatus)
+            {
+                case DeviceStatusId.BP1_Hold:
+                    // Удержание давления на левой руке — здесь идет активный съем сфигмограммы 1
+                    // Если нужно, можно выставить специальный флаг для UI
+                    break;
+
+                case DeviceStatusId.BP2_Hold:
+                    // Удержание давления на левой ноге (съем сфигмограммы 2)
+                    break;
+
+                case DeviceStatusId.BP3_Hold:
+                    // Удержание давления на правой руке (съем сфигмограммы 3)
+                    break;
+
+                case DeviceStatusId.BP4_Hold:
+                    // Удержание давления на правой ноге (съем сфигмограммы 4)
+                    break;
+
+                case DeviceStatusId.PPG_Error:
+                    // Ошибка фотоплетизмограммы (нет пациента). 
+                    // Зануляем отображение PPG, чтобы на графике не было шумов
+                    Data.ApexPPGArray[MainIndex] = 0;
+                    // Здесь можно взвести флаг "Датчик PPG отключен" для вывода предупреждения пользователю
+                    break;
+
+                case DeviceStatusId.BP1_Error:
+                case DeviceStatusId.BP2_Error:
+                case DeviceStatusId.BP3_Error:
+                case DeviceStatusId.BP4_Error:
+                    // Обработка ошибок измерения АД на модулях 1-4
+                    break;
+
+                case DeviceStatusId.BP1_OK:
+                case DeviceStatusId.BP2_OK:
+                case DeviceStatusId.BP3_OK:
+                case DeviceStatusId.BP4_OK:
+                    // Обработка успешного завершения измерения АД
+                    break;
+            }
+
+            // --- Вызов старого события для совместимости интерфейса ---
+            var args = new BPEventArgs { status = statusCode };
+            if (Calibrate || statusCode > 0)
+            {
+                OnBPcompleted(args);
+            }
+        }
+
+
+        // Удобный хелпер для чтения 3-байтовых знаковых чисел (Int24 Little Endian)
+        private int ReadInt24LE(ReadOnlySpan<byte> slice)
+        {
+            int val = slice[0] | (slice[1] << 8) | (slice[2] << 16);
+            return (val & 0x800000) != 0 ? val - 0x1000000 : val;
         }
 
         public int Decompos(USBserialPort usbport, Stream saveFileStream)
         {
             return Decompos(usbport, saveFileStream, null, null);
         }
+        private readonly byte[] _packetBuffer = new byte[67]; // Буфер под максимальный размер пакета
+        private int _packetIdx = 0;                          // Текущая позиция заполнения буфера
+        private int _currentPacketSize = 48;                 // Ожидаемый размер (динамически меняется)
+
 
         public int Decompos(USBserialPort usbport, Stream saveFileStream, StreamWriter txtFileStream, ApexConfig cfg)
         {
-                int bytes = usbport.BytesRead;
-                if (bytes==0)
+            int bytes = usbport.BytesRead;
+            if (bytes == 0)
+            {
+                if (++DTOCounter > MaxDTOCounter) DeviceTurnedOn = false;
+                return 0;
+            }
+
+            DeviceTurnedOn = true;
+
+            if (saveFileStream != null && RecordStarted)
+            {
+                try
                 {
-                    DTOCounter++;
-                    if (DTOCounter > MaxDTOCounter)
-                    {
-                        DeviceTurnedOn = false;
-                    }
-                    return 0;
+                    saveFileStream.Write(usbport.PortBuf, 0, bytes);
+                    TotalBytes += bytes;
                 }
-                DeviceTurnedOn = true;
-                if (saveFileStream != null & RecordStarted)
+                catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            }
+
+            for (int i = 0; i < bytes; i++)
+            {
+                byte currentByte = usbport.PortBuf[i];
+
+                // ШАГ 1: Поиск маркера начала посылки (Offset 0)
+                if (_packetIdx == 0)
                 {
-                    try
-                    {
-                        saveFileStream.Write(usbport.PortBuf, 0, bytes);
-                        TotalBytes = TotalBytes + bytes;
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex.Message);
-                    }
+                    if (currentByte != 0x19) continue; // Пропускаем байты до маркера
+                    _packetBuffer[_packetIdx++] = currentByte;
+                    continue;
                 }
-                for (int i = 0; i < bytes; i++)
+
+                // ШАГ 2: Чтение размера пакета (Offset 1)
+                if (_packetIdx == 1)
                 {
-                    switch (byteNum)
+                    if (currentByte == 48 || currentByte == 67)
                     {
-                        case 0:// Marker
-                            if (usbport.PortBuf[i] == Marker1)
-                                byteNum = 1;
-                            break;
-                        case 1:// ECG1_0
-                            ECG1tmp = (int)usbport.PortBuf[i];
-                            byteNum = 2;
-                            break;
-                        case 2:// ECG1_1
-                            ECG1tmp = ECG1tmp + 0x100 * (int)usbport.PortBuf[i];
-                            byteNum = 3;
-                            break;
-                        case 3:// ECG1_2
-                            ECG1tmp = ECG1tmp + 0x10000 * (int)usbport.PortBuf[i];
-                            if ((ECG1tmp & 0x800000) != 0)
-                                ECG1tmp = ECG1tmp - 0x1000000;
-
-                            Data.ECG1Array[MainIndex] = ECG1tmp;
-
-                            nextECG1 = ECG1tmp;
-                            if (cfg != null)
-                            {
-                                if (cfg.FilterOn)
-                                    nextECG1 = Filter.filter(Filter.coeff50, Data.ECG1Array, MainIndex);
-                            }
-                            detrendECG1 = FilterRecursDetrend(filterCoeff, nextECG1, detrendECG1, prevECG1);
-                            Data.ECG1ViewArray[MainIndex] = (int)Math.Round(detrendECG1);
-                            
-                            prevECG1 = nextECG1;
-                            byteNum = 4;
-                            break;
-
-                        case 4:// ECG2_0
-                            ECG2tmp = (int)usbport.PortBuf[i];
-                            byteNum = 5;
-                            break;
-                        case 5:// ECG2_1
-                            ECG2tmp = ECG2tmp + 0x100 * (int)usbport.PortBuf[i];
-                            byteNum = 6;
-                            break;
-                        case 6:// ECG2_2
-                            ECG2tmp = ECG2tmp + 0x10000 * (int)usbport.PortBuf[i];
-                            if ((ECG2tmp & 0x800000) != 0)
-                                ECG2tmp = ECG2tmp - 0x1000000;
-
-                            Data.ECG2Array[MainIndex] = ECG2tmp;
-
-                            nextECG2 = ECG2tmp;
-                            if (cfg != null)
-                            {
-                                if (cfg.FilterOn)
-                                    nextECG2 = Filter.filter(Filter.coeff50, Data.ECG2Array, MainIndex);
-                            }
-
-                            detrendECG2 = FilterRecursDetrend(filterCoeff, nextECG2, detrendECG2, prevECG2);
-                            Data.ECG2ViewArray[MainIndex] = (int)Math.Round(detrendECG2);
-
-                            prevECG2 = nextECG2;
-                            byteNum = 7;
-                            break;
-
-                        case 7:// Reo1_0
-                            Reo1tmp = (int)usbport.PortBuf[i];
-                            byteNum = 8;
-                            break;
-                        case 8:// Reo1_1
-                            Reo1tmp = Reo1tmp + 0x100 * (int)usbport.PortBuf[i];
-                            byteNum = 9;
-                            break;
-                        case 9:// Reo1_2
-                            Reo1tmp = Reo1tmp + 0x10000 * (int)usbport.PortBuf[i];
-                            if ((Reo1tmp & 0x800000) != 0)
-                                Reo1tmp = Reo1tmp - 0x1000000;
-                            if (Reo1tmp > ApexConstants.ReoMaxVal) Reo1tmp = ApexConstants.ReoMaxVal;
-                            Data.Reo1Array[MainIndex] = - Reo1tmp;
-
-                            nextReo1 = Reo1tmp;
-                            if (cfg != null)
-                            {
-                                if (cfg.FilterOn)
-                                    nextReo1 = Filter.filter(Filter.coeff14, Data.Reo1Array, MainIndex);
-                            }
-
-                            detrendReo1 = FilterRecursDetrend(filterCoeffReo, nextReo1, detrendReo1, prevReo1);
-                            Data.Reo1ViewArray[MainIndex] = (int)Math.Round(detrendReo1);
-
-                            prevReo1 = nextReo1;
-                            byteNum = 10;
-                            break;
-
-                        case 10:// Reo2_0
-                            Reo2tmp = (int)usbport.PortBuf[i];
-                            byteNum = 11;
-                            break;
-                        case 11:// Reo2_1
-                            Reo2tmp = Reo2tmp + 0x100 * (int)usbport.PortBuf[i];
-                            byteNum = 12;
-                            break;
-                        case 12:// Reo2_2
-                            Reo2tmp = Reo2tmp + 0x10000 * (int)usbport.PortBuf[i];
-                            if ((Reo2tmp & 0x800000) != 0)
-                                Reo2tmp = Reo2tmp - 0x1000000;
-
-                            if (Reo2tmp > ApexConstants.ReoMaxVal) Reo2tmp = ApexConstants.ReoMaxVal;
-                            Data.Reo2Array[MainIndex] = - Reo2tmp;
-
-                            nextReo2 = Reo2tmp;
-                            if (cfg != null)
-                            {
-                                if (cfg.FilterOn)
-                                    nextReo2 = Filter.filter(Filter.coeff14, Data.Reo2Array, MainIndex);
-                            }
-
-                            detrendReo2 = FilterRecursDetrend(filterCoeffReo, nextReo2, detrendReo2, prevReo2);
-                            Data.Reo2ViewArray[MainIndex] = -(int)Math.Round(detrendReo2);
-
-                            prevReo2 = nextReo2;
-                            byteNum = 13;
-                            break;
-
-                        case 13:// Sphigmo1_0
-                            Sphigmo1tmp = (byte)usbport.PortBuf[i];
-                            byteNum = 14;
-                            break;
-                        case 14:// Sphigmo1_1
-                            Sphigmo1tmp = Sphigmo1tmp + 0x100 * (int)usbport.PortBuf[i];
-                            byteNum = 15;
-                            break;
-                        case 15:// Sphigmo1_2
-                            Sphigmo1tmp = Sphigmo1tmp + 0x10000 * (int)usbport.PortBuf[i];
-                            if ((Sphigmo1tmp & 0x800000) != 0)
-                                Sphigmo1tmp = Sphigmo1tmp - 0x1000000;
-
-                            Data.Sphigmo1Array[MainIndex] = Sphigmo1tmp;
-
-                            nextSphigmo1 = Sphigmo1tmp;
-                            if (cfg != null)
-                            {
-                                if (cfg.FilterOn)
-                                    nextSphigmo1 = Filter.filter(Filter.coeff14, Data.Sphigmo1Array, MainIndex);
-                            }
-
-                            detrendSphigmo1 = FilterRecursDetrend(filterCoeff, nextSphigmo1, detrendSphigmo1, prevSphigmo1);
-                            Data.Sphigmo1ViewArray[MainIndex] = (int)Math.Round(detrendSphigmo1);
-                            prevSphigmo1 = nextSphigmo1;
-                            byteNum = 16;
-                            break;
-
-                        case 16:// Sphigmo2_0
-                            Sphigmo2tmp = (byte)usbport.PortBuf[i];
-                            byteNum = 17;
-                            break;
-                        case 17:// Sphigmo2_1
-                            Sphigmo2tmp = Sphigmo2tmp + 0x100 * (int)usbport.PortBuf[i];
-                            byteNum = 18;
-                            break;
-                        case 18:// Sphigmo2_2
-                            Sphigmo2tmp = Sphigmo2tmp + 0x10000 * (int)usbport.PortBuf[i];
-                            if ((Sphigmo2tmp & 0x800000) != 0)
-                                Sphigmo2tmp = Sphigmo2tmp - 0x1000000;
-
-                            Data.Sphigmo2Array[MainIndex] = Sphigmo2tmp;
-
-                            nextSphigmo2 = Sphigmo2tmp;
-                            if (cfg != null)
-                            {
-                                if (cfg.FilterOn)
-                                    nextSphigmo2 = Filter.filter(Filter.coeff14, Data.Sphigmo2Array, MainIndex);
-                            }
-
-                            detrendSphigmo2 = FilterRecursDetrend(filterCoeff, nextSphigmo2, detrendSphigmo2, prevSphigmo2);
-                            Data.Sphigmo2ViewArray[MainIndex] = (int)Math.Round(detrendSphigmo2);
-                            prevSphigmo2 = nextSphigmo2;
-                            byteNum = 19;
-                            break;
-
-                        case 19: //Apex 0
-                            Apextmp = (int)usbport.PortBuf[i];
-                            byteNum = 20;
-                            break;
-                        case 20: //Apex 1
-                            Apextmp = Apextmp + 0x100 * (int)(usbport.PortBuf[i]);
-                            byteNum = 21;
-                            break;
-                        case 21: //Apex 2
-                            Apextmp = Apextmp + 0x10000 * (int)usbport.PortBuf[i];
-                            if ((Apextmp & 0x800000) != 0)
-                                Apextmp = Apextmp - 0x1000000;
-
-                            Data.ApexArray[MainIndex] = Apextmp;
-
-                            nextApex = Apextmp;
-                            if (cfg != null)
-                            {
-                                if (cfg.FilterOn)
-                                    nextApex = Filter.filter(Filter.coeff14, Data.ApexArray, MainIndex);
-                            }
-
-                            detrendApex = FilterRecursDetrend(filterCoeff, nextApex, detrendApex, prevApex);
-                            Data.ApexViewArray[MainIndex] = (int)Math.Round(detrendApex);
-                            prevApex = nextApex;
-
-                            byteNum = 22;
-                            break;
-
-                        case 22: //Press 1 SYS 
-                            PrSYS1 = usbport.PortBuf[i];
-                            byteNum = 23;
-                            break;
-                        case 23: //Press 1 DIA
-                            PrDIA1 = usbport.PortBuf[i];
-                            byteNum = 24;
-                            break;
-                        case 24: //Press 2 SYS 
-                            PrSYS2 = usbport.PortBuf[i];
-                            byteNum = 25;
-                            break;
-                        case 25: //Press 2 DIA
-                            PrDIA2 = usbport.PortBuf[i];
-                            byteNum = 26;
-                            break;
-                        case 26: //Status
-                            Status = usbport.PortBuf[i];
-                            BP1measStarted = ((Status & bp1progress) != 0);
-                            BP2measStarted = ((Status & bp2progress) != 0);
-
-                            if (Pump1Started & (Status & pump1progress) != 0)
-                                Pump1RealyStarted = true;
-                            if (Pump1RealyStarted)
-                            {
-//                                detrendSphigmo1 = 0;
-                                Data.Sphigmo1ViewArray[MainIndex] = 0;// (int)Math.Round(detrendSphigmo1);
-                            }
-                            if (Pump1RealyStarted & (Status & pump1progress) == 0)
-                            {
-                                DelayCounter1++;
-                                if (DelayCounter1 > MaxDelayCounter)
-                                {
-                                    Pump1Started = false;
-                                    Pump1RealyStarted = false;
-                                    detrendSphigmo1 = 0;
-                                    DelayCounter1 = 0;
-                                }
-                            }
-
-                            if (Pump2Started & (Status & pump2progress) != 0)
-                                Pump2RealyStarted = true;
-                            if (Pump2RealyStarted)
-                            {
-                                detrendSphigmo2 = 0;
-                                Data.Sphigmo2ViewArray[MainIndex] = (int)Math.Round(detrendSphigmo2);
-                            }
-                            if (Pump2RealyStarted & (Status & pump2progress) == 0)
-                            {
-                                DelayCounter2++;
-                                if (DelayCounter2 > MaxDelayCounter)
-                                {
-                                    Pump2Started = false;
-                                    Pump2RealyStarted = false;
-                                    detrendSphigmo2 = 0;
-                                    DelayCounter1 = 0;
-                                }
-                            }
-
-                            if (Calibrate)
-                            {
-                                var args = new BPEventArgs();
-                                args.status = Status;
-                                OnBPcompleted(args);
-                            }
-                            else
-                            if (Status > 0) 
-                            {
-                                var args = new BPEventArgs();
-                                args.status = Status;
-                                OnBPcompleted(args);
-                            }
-                            byteNum = 0;
-
-                            if (RecordStarted)
-                                txtFileStream.WriteLine(GetDataString(MainIndex));
-                            OnDecomposeLineEvent();
-                            LineCounter++;
-                            MainIndex++;
-                            MainIndex = MainIndex & (DataArrSize - 1);
-                            break;
+                        _currentPacketSize = currentByte;
+                        _packetBuffer[_packetIdx++] = currentByte;
                     }
+                    else
+                    {
+                        _packetIdx = 0; // Сброс: пришел некорректный размер пакета
+                    }
+                    continue;
                 }
-                usbport.BytesRead = 0;
 
-            return /*usbport.PortBuf.Length -*/ bytes;
+                // ШАГ 3: Накопление тела пакета
+                _packetBuffer[_packetIdx++] = currentByte;
+
+                // ШАГ 4: Пакет собран полностью — запускаем парсинг и финализацию
+                if (_packetIdx >= _currentPacketSize)
+                {
+                    ParseFullPacket(_packetBuffer.AsSpan(0, _currentPacketSize), cfg);
+
+                    // Запись в файл, вызов событий и сдвиг кольцевого MainIndex
+                    FinalizePacket(txtFileStream);
+
+                    _packetIdx = 0; // Сброс буфера для следующего пакета
+                }
+            }
+
+            usbport.BytesRead = 0;
+            return bytes;
         }
 
-
-        private String GetDataString(uint index)
+        private void FinalizePacket(StreamWriter? txtFileStream)
         {
-            //"Dd:mm:yyyy HH:mm:ss:fff"
-            return String.Concat(DateTime.Now.ToString(), Convert.ToChar(9),
-                                 Data.ECG1Array[index].ToString(), Convert.ToChar(9),
-                                 Data.ECG2Array[index].ToString(), Convert.ToChar(9),
-                                 Data.Reo1Array[index].ToString(), Convert.ToChar(9),
-                                 Data.Reo2Array[index].ToString(), Convert.ToChar(9),
-                                 Data.Sphigmo1Array[index].ToString(), Convert.ToChar(9),
-                                 Data.Sphigmo2Array[index].ToString(), Convert.ToChar(9),
-                                 Data.ApexArray[index].ToString());
-/*            return String.Concat(DateTime.Now.ToString(), Convert.ToChar(9),
-                                 Data.ECG1ViewArray[index].ToString(), Convert.ToChar(9),
-                                 Data.ECG2ViewArray[index].ToString(), Convert.ToChar(9),
-                                 Data.Reo1ViewArray[index].ToString(), Convert.ToChar(9),
-                                 Data.Reo2ViewArray[index].ToString(), Convert.ToChar(9),
-                                 Data.Sphigmo1ViewArray[index].ToString(), Convert.ToChar(9),
-                                 Data.Sphigmo2ViewArray[index].ToString(), Convert.ToChar(9),
-                                 Data.ApexViewArray[index].ToString(), Convert.ToChar(9));*/
+            // Запись в текстовый лог, если запущена запись
+            if (RecordStarted && txtFileStream != null)
+            {
+                // Передаем MainIndex (кастуем к int, если метод GetDataString принимает int)
+                txtFileStream.WriteLine(GetDataString(MainIndex));
+            }
+
+            // Вызов события отрисовки интерфейса
+            OnDecomposeLineEvent();
+
+            // Инкрементируем счетчик линий
+            LineCounter++;
+
+            // Сдвигаем кольцевой индекс и сбрасываем по маске степени двойки
+            MainIndex++;
+            MainIndex &= (uint)(DataArrSize - 1);
         }
+
+        private string GetDataString(uint index)
+        {
+            // Рассчитываем стартовый индекс в массиве звука для текущего кадра (index * 8)
+            uint soundIdx = index << 3;
+
+            // Высокопроизводительная интерполяция строк .NET 8/9 (автоматически компилируется в оптимальный StringHandler)
+            return $"{DateTime.Now}\t" +
+                   $"{Data.ECG1Array[index]}\t" +
+                   $"{Data.ECG2Array[index]}\t" +
+                   $"{Data.Reo1Array[index]}\t" +
+                   $"{Data.Reo2Array[index]}\t" +
+                   $"{Data.SphigmoLeftHandArray[index]}\t" +
+                   $"{Data.SphigmoLeftLegArray[index]}\t" +
+                   $"{Data.SphigmoRightHandArray[index]}\t" + // Новый канал: Sfig3
+                   $"{Data.SphigmoRightLegArray[index]}\t" +  // Новый канал: Sfig4
+                   $"{Data.ApexArray[index]}\t" +
+                   $"{Data.PPGArray[index]}\t" +               // Новый канал: Фотоплетизмограмма
+
+                   // Выгрузка 8 последовательных отсчетов микрофона (ФКГ)
+                   $"{Data.SoundArray[soundIdx]}\t" +
+                   $"{Data.SoundArray[soundIdx + 1]}\t" +
+                   $"{Data.SoundArray[soundIdx + 2]}\t" +
+                   $"{Data.SoundArray[soundIdx + 3]}\t" +
+                   $"{Data.SoundArray[soundIdx + 4]}\t" +
+                   $"{Data.SoundArray[soundIdx + 5]}\t" +
+                   $"{Data.SoundArray[soundIdx + 6]}\t" +
+                   $"{Data.SoundArray[soundIdx + 7]}\t" +
+
+                   // Выгрузка данных артериального давления NIBP 1-4 (SYS, DIA, текущее Press)
+                   $"{Data.NIBP1_Syst}\t{Data.NIBP1_Diast}\t{Data.NIBP1_Press}\t" +
+                   $"{Data.NIBP2_Syst}\t{Data.NIBP2_Diast}\t{Data.NIBP2_Press}\t" +
+                   $"{Data.NIBP3_Syst}\t{Data.NIBP3_Diast}\t{Data.NIBP3_Press}\t" +
+                   $"{Data.NIBP4_Syst}\t{Data.NIBP4_Diast}\t{Data.NIBP4_Press}\t" +
+
+                   // Текущее полное состояние прибора (3-байтовое)
+                   $"{Data.DeviceStatus}";
+        }
+
     }
 }

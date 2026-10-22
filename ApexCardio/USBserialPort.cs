@@ -99,7 +99,7 @@ namespace ApexCardio
         //Return array of port names with VCP string;
         private string[] GetPortsNames()
         {
-            const string VCP = @"\Device\VCP";
+            const string VCP = "USBSER";
 
             RegistryKey r_hklm = Registry.LocalMachine;
             RegistryKey r_hard = r_hklm.OpenSubKey("HARDWARE");

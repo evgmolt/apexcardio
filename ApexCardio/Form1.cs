@@ -92,9 +92,9 @@ namespace ApexCardio
 
         private void InitDevice()
         {
-            USBPort.WriteByte(ApexConstants.cmSetPressLevel1);
+            USBPort.WriteByte(ApexConstants.cmdSetPressSfig1);
             USBPort.WriteByte(Cfg.PressLevel1);
-            USBPort.WriteByte(ApexConstants.cmSetPressLevel2);
+            USBPort.WriteByte(ApexConstants.cmdSetPressSfig2);
             USBPort.WriteByte(Cfg.PressLevel2);
         }
 
@@ -413,11 +413,11 @@ namespace ApexCardio
         }
         private void bufferedPanel4_Paint(object sender, PaintEventArgs e)
         {
-                buffPanel_Paint(DataA.Sphigmo1ViewArray, null, GInfoArr[4].BufPanel, ChannelsScaleY[2], ChannelsMaxSize[4], e);
+                buffPanel_Paint(DataA.SphigmoLeftHandViewArray, null, GInfoArr[4].BufPanel, ChannelsScaleY[2], ChannelsMaxSize[4], e);
         }
         private void bufferedPanel5_Paint(object sender, PaintEventArgs e)
         {
-                buffPanel_Paint(DataA.Sphigmo2ViewArray, null, GInfoArr[5].BufPanel, ChannelsScaleY[2], ChannelsMaxSize[5], e);
+                buffPanel_Paint(DataA.SphigmoLeftLegViewArray, null, GInfoArr[5].BufPanel, ChannelsScaleY[2], ChannelsMaxSize[5], e);
         }
         private void bufferedPanel6_Paint(object sender, PaintEventArgs e)
         {
@@ -476,8 +476,8 @@ namespace ApexCardio
             {
                 if (Connected & decomposer.DeviceTurnedOn)
                 {
-                    USBPort.WriteByte(ApexConstants.cmStopPump1);
-                    USBPort.WriteByte(ApexConstants.cmStopPump2);
+                    USBPort.WriteByte(ApexConstants.cmdStopSfig1);
+                    USBPort.WriteByte(ApexConstants.cmdStopSfig2);
                 }
             }
             if (WindowState == FormWindowState.Maximized) Cfg.Maximized = true;
@@ -831,8 +831,8 @@ namespace ApexCardio
                 a.ECG2Array[i - skip] = Convert.ToInt32(s[2]);
                 a.Reo1Array[i - skip] = Convert.ToInt32(s[3]);
                 a.Reo2Array[i - skip] = Convert.ToInt32(s[4]);
-                a.Sphigmo1Array[i - skip] = Convert.ToInt32(s[5]);
-                a.Sphigmo2Array[i - skip] = Convert.ToInt32(s[6]);
+                a.SphigmoLeftHandArray[i - skip] = Convert.ToInt32(s[5]);
+                a.SphigmoLeftLegArray[i - skip] = Convert.ToInt32(s[6]);
                 a.ApexArray[i - skip] = Convert.ToInt32(s[7]);
             }
             var d = new ByteDecomposer(a);
@@ -906,10 +906,10 @@ namespace ApexCardio
             }
             ChannelsMaxSize[2] = (int)(coeff * Math.Max(r1, r2));
             ChannelsMaxSize[3] = (int)(coeff * Math.Max(r1, r2));
-            r1 = DataProcessing.GetRange(DataA.Sphigmo1ViewArray, size);
+            r1 = DataProcessing.GetRange(DataA.SphigmoLeftHandViewArray, size);
             if (GInfoArr[5].Visible)
             {
-                r2 = DataProcessing.GetRange(DataA.Sphigmo2ViewArray, size);
+                r2 = DataProcessing.GetRange(DataA.SphigmoLeftLegViewArray, size);
             }
             ChannelsMaxSize[4] = (int)(coeff * Math.Max(r1, r2));
             ChannelsMaxSize[5] = (int)(coeff * Math.Max(r1, r2));
@@ -926,6 +926,7 @@ namespace ApexCardio
             {
                 butFlow.Text = "Stop stream";
                 InitArraysForFlow();
+
 //                textBoxRecInfo.Clear();
                 labRecordSize.Visible = false;
                 hScrollBar1.Visible = false;
@@ -946,25 +947,25 @@ namespace ApexCardio
         private void numUDplevel1_ValueChanged(object sender, EventArgs e)
         {
             Cfg.PressLevel1 = (byte)numUDplevel1.Value;
-            USBPort.WriteByte(ApexConstants.cmSetPressLevel1);
+            USBPort.WriteByte(ApexConstants.cmdSetPressSfig1);
             USBPort.WriteByte(Cfg.PressLevel1);
         }
 
         private void numUDplevel2_ValueChanged(object sender, EventArgs e)
         {
             Cfg.PressLevel2 = (byte)numUDplevel2.Value;
-            USBPort.WriteByte(ApexConstants.cmSetPressLevel2);
+            USBPort.WriteByte(ApexConstants.cmdSetPressSfig2);
             USBPort.WriteByte(Cfg.PressLevel2);
         }
 
         private void butPumpsStart_Click(object sender, EventArgs e)
         {
-            USBPort.WriteByte(ApexConstants.cmSetPressLevel1);
+            USBPort.WriteByte(ApexConstants.cmdSetPressSfig1);
             USBPort.WriteByte(Cfg.PressLevel1);
-            USBPort.WriteByte(ApexConstants.cmSetPressLevel2);
+            USBPort.WriteByte(ApexConstants.cmdSetPressSfig2);
             USBPort.WriteByte(Cfg.PressLevel2);
-            USBPort.WriteByte(ApexConstants.cmStartPump1);
-            USBPort.WriteByte(ApexConstants.cmStartPump2);
+            USBPort.WriteByte(ApexConstants.cmdStartSfig1);
+            USBPort.WriteByte(ApexConstants.cmdStartSfig2);
             if (decomposer != null)
             {
                 decomposer.Pump1Started = true;
@@ -974,9 +975,9 @@ namespace ApexCardio
 
         private void butPump1start_Click(object sender, EventArgs e)
         {
-            USBPort.WriteByte(ApexConstants.cmSetPressLevel1);
+            USBPort.WriteByte(ApexConstants.cmdSetPressSfig1);
             USBPort.WriteByte(Cfg.PressLevel1);
-            USBPort.WriteByte(ApexConstants.cmStartPump1);
+            USBPort.WriteByte(ApexConstants.cmdStartSfig1);
             if (decomposer != null)
             {
                 decomposer.Pump1Started = true;
@@ -985,9 +986,9 @@ namespace ApexCardio
 
         private void butPump2start_Click(object sender, EventArgs e)
         {
-            USBPort.WriteByte(ApexConstants.cmSetPressLevel2);
+            USBPort.WriteByte(ApexConstants.cmdSetPressSfig2);
             USBPort.WriteByte(Cfg.PressLevel2);
-            USBPort.WriteByte(ApexConstants.cmStartPump2);
+            USBPort.WriteByte(ApexConstants.cmdStartSfig2);
             if (decomposer != null)
             {
                 decomposer.Pump2Started = true;
@@ -996,8 +997,8 @@ namespace ApexCardio
 
         private void butPumpsStop_Click(object sender, EventArgs e)
         {
-            USBPort.WriteByte(ApexConstants.cmStopPump1);
-            USBPort.WriteByte(ApexConstants.cmStopPump2);
+            USBPort.WriteByte(ApexConstants.cmdStopSfig1);
+            USBPort.WriteByte(ApexConstants.cmdStopSfig2);
             if (decomposer != null)
             {
                 decomposer.Pump1Started = false;
@@ -1007,7 +1008,7 @@ namespace ApexCardio
 
         private void butPump1stop_Click(object sender, EventArgs e)
         {
-            USBPort.WriteByte(ApexConstants.cmStopPump1);
+            USBPort.WriteByte(ApexConstants.cmdStopSfig1);
             if (decomposer != null)
             {
                 decomposer.Pump1Started = false;
@@ -1016,7 +1017,7 @@ namespace ApexCardio
 
         private void butPump2stop_Click(object sender, EventArgs e)
         {
-            USBPort.WriteByte(ApexConstants.cmStopPump2);
+            USBPort.WriteByte(ApexConstants.cmdStopSfig2);
             if (decomposer != null)
             {
                 decomposer.Pump2Started = false;
@@ -1025,22 +1026,22 @@ namespace ApexCardio
 
         private void butBPMeas_Click(object sender, EventArgs e)
         {
-            USBPort.WriteByte(ApexConstants.cmStartBP1);
+            USBPort.WriteByte(ApexConstants.cmdStartBP1);
         }
 
         private void butBPabort_Click(object sender, EventArgs e)
         {
-            USBPort.WriteByte(ApexConstants.cmCancelBP1);
+            USBPort.WriteByte(ApexConstants.cmdCancelBP1);
         }
 
         private void butBPmeas2_Click(object sender, EventArgs e)
         {
-            USBPort.WriteByte(ApexConstants.cmStartBP2);
+            USBPort.WriteByte(ApexConstants.cmdStartBP2);
         }
 
         private void butBPabort2_Click(object sender, EventArgs e)
         {
-            USBPort.WriteByte(ApexConstants.cmCancelBP2);
+            USBPort.WriteByte(ApexConstants.cmdCancelBP2);
         }
 
         private void DetectECG()
