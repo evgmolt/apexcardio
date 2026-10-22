@@ -17,7 +17,7 @@ namespace ApexCardio
         public bool Visible;
         public Label LabName;
     }
-    
+
     public partial class Form1 : Form, IMessageHandler
     {
         public event Action<Message> WindowsMessage;
@@ -29,15 +29,38 @@ namespace ApexCardio
         GraphicsInfo[] GInfoArr;
         TrackBar[] AmpBarArr;
         int[] AmpBarVals;
-        private string[] ChannelsNames = { "ECG 1", "ECG 2", "Reogram 1", "Reogram 2", "Sphigmogram 1", "Sphigmogram 2", "Apex cardiogram" };
-        private int[] ChannelsMaxSize = { 60000, 60000, 5000, 5000, 40000, 40000, 4000 };
-        private int chECG1 = 0;
-        private int chECG2 = 1;
-        private int chReo1 = 2;
-        private int chReo2 = 3;
-        private int chSphigmo1 = 4;
-        private int chSphigmo2 = 5;
-        private int chApex = 6;
+        private string[] ChannelsNames = {
+            "ECG 1",
+            "ECG 2",
+            "Reogram 1",
+            "Reogram 2",
+            "Sphigmogram 1",
+            "Sphigmogram 2",
+            "Sphigmogram 3",
+            "Sphigmogram 4",
+            "Apex cardiogram",
+             "PPG",
+             "Sound"
+        };
+        private int[] ChannelsMaxSize = { 60000, 60000, 5000, 5000, 40000, 40000, 40000, 40000, 4000 };
+
+        private enum ChNames
+        {
+            chECG1,
+            chECG2,
+            chReo1,
+            chReo2,
+            chSphigmo1,
+            chSphigmo2,
+            chSphigmo3,
+            chSphigmo4,
+            chApex,
+            chPPG,
+            chSound
+
+        }
+
+
         private double[] ChannelsScaleY;
         private int ViewShift = 0;
         private bool ViewMode = false;
@@ -48,15 +71,15 @@ namespace ApexCardio
         private bool DataReadyToSave = false;
         private int DelayCounter;
         private ApexVisirs V;
-    
+
         public Form1()
         {
             InitializeComponent();
             GInfoArr = new GraphicsInfo[ApexConstants.NumOfChannels];
-            AmpBarArr = new TrackBar[4];
-            AmpBarVals = new int[4];
-            ChannelsScaleY = new double[4];
-            for (int i = 0; i < 4; i++)
+            AmpBarArr = new TrackBar[ApexConstants.NumOfAmpBars];
+            AmpBarVals = new int[ApexConstants.NumOfAmpBars];
+            ChannelsScaleY = new double[ApexConstants.NumOfAmpBars];
+            for (int i = 0; i < ApexConstants.NumOfAmpBars; i++)
             {
                 ChannelsScaleY[i] = 1;
                 AmpBarVals[i] = 0;
@@ -124,9 +147,9 @@ namespace ApexCardio
             labP2.Text = (DataA.Reo2Array[decomposer.MainIndex]).ToString();
             labP3.Text = (DataA.ECG1Array[decomposer.MainIndex]).ToString();
 
-//            labP1.Text = (DataA.Sphigmo1Array[decomposer.MainIndex] / k).ToString();
-//            labP2.Text = (DataA.Sphigmo2Array[decomposer.MainIndex] / k).ToString();
-//            labP3.Text = (DataA.ApexArray[decomposer.MainIndex] / k).ToString();
+            //            labP1.Text = (DataA.Sphigmo1Array[decomposer.MainIndex] / k).ToString();
+            //            labP2.Text = (DataA.Sphigmo2Array[decomposer.MainIndex] / k).ToString();
+            //            labP3.Text = (DataA.ApexArray[decomposer.MainIndex] / k).ToString();
             labStatus.Text = Convert.ToString(decomposer.Status, 2);
             if ((decomposer.Status & ByteDecomposer.bp1error) == 0)
                 labBP1.Text = decomposer.PrSYS1.ToString() + " / " + decomposer.PrDIA1.ToString();
@@ -137,7 +160,7 @@ namespace ApexCardio
 
         void NewLineReceived(object sender, EventArgs agr)
         {
-//            if (decomposer.LineCounter % ByteDecomposer.SamplingFrequency != 0) return;
+            //            if (decomposer.LineCounter % ByteDecomposer.SamplingFrequency != 0) return;
             int lc = decomposer.LineCounter / ByteDecomposer.SamplingFrequency;
             labRecordSize.Text = String.Concat("Record size : ",
                                                lc.ToString(),
@@ -158,7 +181,7 @@ namespace ApexCardio
             {
                 mess = "BP 1 " + decomposer.PrSYS1.ToString() + "/" +
                                  decomposer.PrDIA1.ToString();
-                labBP1.Text = decomposer.PrSYS1.ToString() + " / "+ decomposer.PrDIA1.ToString();
+                labBP1.Text = decomposer.PrSYS1.ToString() + " / " + decomposer.PrDIA1.ToString();
                 if (CurrentRecordInfo != null)
                 {
                     CurrentRecordInfo.Data.ABP[0] = decomposer.PrSYS1;
@@ -221,7 +244,7 @@ namespace ApexCardio
                 {
                     gi.LabName = new Label();
                     gi.LabName.Location = new Point(space, Y);
-                    gi.LabName.Text = ChannelsNames[i]; 
+                    gi.LabName.Text = ChannelsNames[i];
                     gi.BufPanel = new BufferedPanel(i);
                     gi.BufPanel.Cursor = Cursors.Cross;
                     gi.BufPanel.Location = new Point(space, Y + space);
@@ -234,6 +257,10 @@ namespace ApexCardio
                     if (i == 4) gi.BufPanel.Paint += bufferedPanel4_Paint;
                     if (i == 5) gi.BufPanel.Paint += bufferedPanel5_Paint;
                     if (i == 6) gi.BufPanel.Paint += bufferedPanel6_Paint;
+                    if (i == 7) gi.BufPanel.Paint += bufferedPanel7_Paint;
+                    if (i == 8) gi.BufPanel.Paint += bufferedPanel8_Paint;
+                    if (i == 9) gi.BufPanel.Paint += bufferedPanel9_Paint;
+                    if (i == 10) gi.BufPanel.Paint += bufferedPanel10_Paint;
                     panelGraph.Controls.Add(gi.BufPanel);
                     panelGraph.Controls.Add(gi.LabName);
                     GInfoArr[i] = gi;
@@ -259,28 +286,43 @@ namespace ApexCardio
                     AmpBarArr[i] = null;
                 }
             }
-            if (GInfoArr[chECG1].Visible | GInfoArr[chECG2].Visible)
+            if (GInfoArr[(int)ChNames.chECG1].Visible | GInfoArr[(int)ChNames.chECG2].Visible)
             {
                 AmpBarArr[0] = new TrackBar();
                 AmpBarArr[0].ValueChanged += trackBarECG_ValueChanged;
             }
-            if (GInfoArr[chReo1].Visible | GInfoArr[chReo2].Visible)
+            if (GInfoArr[(int)ChNames.chReo1].Visible | GInfoArr[(int)ChNames.chReo2].Visible)
             {
                 AmpBarArr[1] = new TrackBar();
                 AmpBarArr[1].ValueChanged += trackBarReo_ValueChanged;
             }
-            if (GInfoArr[chSphigmo1].Visible | GInfoArr[chSphigmo2].Visible)
+            if (GInfoArr[(int)ChNames.chSphigmo1].Visible | GInfoArr[(int)ChNames.chSphigmo2].Visible)
             {
                 AmpBarArr[2] = new TrackBar();
                 AmpBarArr[2].ValueChanged += trackBarSphigmo_ValueChanged;
             }
-            if (GInfoArr[chApex].Visible)
+            if (GInfoArr[(int)ChNames.chSphigmo3].Visible | GInfoArr[(int)ChNames.chSphigmo4].Visible)
             {
                 AmpBarArr[3] = new TrackBar();
-                AmpBarArr[3].ValueChanged += trackBarApex_ValueChanged;
+                AmpBarArr[3].ValueChanged += trackBarSphigmo_ValueChanged;
+            }
+            if (GInfoArr[(int)ChNames.chApex].Visible)
+            {
+                AmpBarArr[4] = new TrackBar();
+                AmpBarArr[4].ValueChanged += trackBarApex_ValueChanged;
+            }
+            if (GInfoArr[(int)ChNames.chPPG].Visible)
+            {
+                AmpBarArr[5] = new TrackBar();
+                AmpBarArr[5].ValueChanged += trackBarApex_ValueChanged;
+            }
+            if (GInfoArr[(int)ChNames.chSound].Visible)
+            {
+                AmpBarArr[6] = new TrackBar();
+                AmpBarArr[6].ValueChanged += trackBarApex_ValueChanged;
             }
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < ApexConstants.NumOfAmpBars; i++)
             {
                 if (AmpBarArr[i] != null)
                 {
@@ -293,7 +335,7 @@ namespace ApexCardio
             }
             if (AmpBarArr[0] != null)
             {
-                if ((GInfoArr[chECG1].Visible ^ GInfoArr[chECG2].Visible))
+                if ((GInfoArr[(int)ChNames.chECG1].Visible ^ GInfoArr[(int)ChNames.chECG2].Visible))
                 {
                     AmpBarArr[0].Size = new Size(45, singleHeight);
                 }
@@ -302,9 +344,10 @@ namespace ApexCardio
                     AmpBarArr[0].Size = new Size(45, singleHeight * 2);
                 }
             }
+            
             if (AmpBarArr[1] != null)
             {
-                if ((GInfoArr[chReo1].Visible ^ GInfoArr[chReo2].Visible))
+                if ((GInfoArr[(int)ChNames.chReo1].Visible ^ GInfoArr[(int)ChNames.chReo2].Visible))
                 {
                     AmpBarArr[1].Size = new Size(45, singleHeight);
                 }
@@ -313,9 +356,10 @@ namespace ApexCardio
                     AmpBarArr[1].Size = new Size(45, singleHeight * 2);
                 }
             }
+
             if (AmpBarArr[2] != null)
             {
-                if ((GInfoArr[chSphigmo1].Visible ^ GInfoArr[chSphigmo2].Visible))
+                if ((GInfoArr[(int)ChNames.chSphigmo1].Visible ^ GInfoArr[(int)ChNames.chSphigmo2].Visible))
                 {
                     AmpBarArr[2].Size = new Size(45, singleHeight);
                 }
@@ -324,10 +368,34 @@ namespace ApexCardio
                     AmpBarArr[2].Size = new Size(45, singleHeight * 2);
                 }
             }
+
             if (AmpBarArr[3] != null)
             {
-                AmpBarArr[3].Size = new Size(45, singleHeight);
+                if ((GInfoArr[(int)ChNames.chSphigmo3].Visible ^ GInfoArr[(int)ChNames.chSphigmo3].Visible))
+                {
+                    AmpBarArr[3].Size = new Size(45, singleHeight);
+                }
+                else
+                {
+                    AmpBarArr[3].Size = new Size(45, singleHeight * 2);
+                }
             }
+
+            if (AmpBarArr[4] != null)
+            {
+                AmpBarArr[4].Size = new Size(45, singleHeight);
+            }
+
+            if (AmpBarArr[5] != null)
+            {
+                AmpBarArr[5].Size = new Size(45, singleHeight);
+            }
+
+            if (AmpBarArr[6] != null)
+            {
+                AmpBarArr[6].Size = new Size(45, singleHeight);
+            }
+
             int Y = space;
             for (int i = 0; i < AmpBarArr.Count(); i++)
             {
@@ -348,7 +416,7 @@ namespace ApexCardio
 
         private void buffPanel_Paint(int[] data, int[] derivdata, Control panel, double ScaleY, int MaxSize, PaintEventArgs e)
         {
-//            if (decomposer.MainIndex < 2 & !ViewMode) return;
+            //            if (decomposer.MainIndex < 2 & !ViewMode) return;
             float tension = 0.1F;
             var R0 = new Rectangle(0, 0, panel.Width - 1, panel.Height - 1);
             var pen0 = new Pen(Color.Black, 1);
@@ -382,46 +450,62 @@ namespace ApexCardio
                 e.Graphics.DrawLine(pen1, V.Visir2.X - ViewShift, R0.Top, V.Visir2.X - ViewShift, R0.Height);
             pen1.Dispose();
 
-//            if (data == DataA.ECG1ViewArray)
-            
-//                if (V.Visir1.Visible & V.Visir2.Visible)
+            //            if (data == DataA.ECG1ViewArray)
+
+            //                if (V.Visir1.Visible & V.Visir2.Visible)
+            {
+                var penR = new Pen(Color.Green, 1);
+                for (int i = 0; i < DataA.RInd; i++)
                 {
-                    var penR = new Pen(Color.Green, 1);
-                    for (int i = 0; i < DataA.RInd; i++)
-                    {
-                        e.Graphics.DrawLine(penR, DataA.RArray[i] - ViewShift, R0.Top, DataA.RArray[i] - ViewShift, R0.Height);
-                    }
-                    penR.Dispose();
+                    e.Graphics.DrawLine(penR, DataA.RArray[i] - ViewShift, R0.Top, DataA.RArray[i] - ViewShift, R0.Height);
                 }
+                penR.Dispose();
+            }
         }
 
         private void bufferedPanel0_Paint(object sender, PaintEventArgs e)
         {
-                buffPanel_Paint(DataA.ECG1ViewArray, null, GInfoArr[0].BufPanel, ChannelsScaleY[0], ChannelsMaxSize[0], e);
+            buffPanel_Paint(DataA.ECG1ViewArray, null, GInfoArr[0].BufPanel, ChannelsScaleY[0], ChannelsMaxSize[0], e);
         }
         private void bufferedPanel1_Paint(object sender, PaintEventArgs e)
         {
-                buffPanel_Paint(DataA.ECG2ViewArray, null, GInfoArr[1].BufPanel, ChannelsScaleY[0], ChannelsMaxSize[1], e);
+            buffPanel_Paint(DataA.ECG2ViewArray, null, GInfoArr[1].BufPanel, ChannelsScaleY[0], ChannelsMaxSize[1], e);
         }
         private void bufferedPanel2_Paint(object sender, PaintEventArgs e)
         {
-                buffPanel_Paint(DataA.Reo1ViewArray, null, GInfoArr[2].BufPanel, ChannelsScaleY[1], ChannelsMaxSize[2], e);
+            buffPanel_Paint(DataA.Reo1ViewArray, null, GInfoArr[2].BufPanel, ChannelsScaleY[1], ChannelsMaxSize[2], e);
         }
         private void bufferedPanel3_Paint(object sender, PaintEventArgs e)
         {
-                buffPanel_Paint(DataA.Reo2ViewArray, null, GInfoArr[3].BufPanel, ChannelsScaleY[1], ChannelsMaxSize[3], e);
+            buffPanel_Paint(DataA.Reo2ViewArray, null, GInfoArr[3].BufPanel, ChannelsScaleY[1], ChannelsMaxSize[3], e);
         }
         private void bufferedPanel4_Paint(object sender, PaintEventArgs e)
         {
-                buffPanel_Paint(DataA.SphigmoLeftHandViewArray, null, GInfoArr[4].BufPanel, ChannelsScaleY[2], ChannelsMaxSize[4], e);
+            buffPanel_Paint(DataA.SphigmoLeftHandViewArray, null, GInfoArr[4].BufPanel, ChannelsScaleY[2], ChannelsMaxSize[4], e);
         }
         private void bufferedPanel5_Paint(object sender, PaintEventArgs e)
         {
-                buffPanel_Paint(DataA.SphigmoLeftLegViewArray, null, GInfoArr[5].BufPanel, ChannelsScaleY[2], ChannelsMaxSize[5], e);
+            buffPanel_Paint(DataA.SphigmoLeftLegViewArray, null, GInfoArr[5].BufPanel, ChannelsScaleY[2], ChannelsMaxSize[5], e);
         }
         private void bufferedPanel6_Paint(object sender, PaintEventArgs e)
         {
-                buffPanel_Paint(DataA.ApexViewArray, null, GInfoArr[6].BufPanel, ChannelsScaleY[3], ChannelsMaxSize[6], e);
+            buffPanel_Paint(DataA.SphigmoRightHandViewArray, null, GInfoArr[6].BufPanel, ChannelsScaleY[2], ChannelsMaxSize[4], e);
+        }
+        private void bufferedPanel7_Paint(object sender, PaintEventArgs e)
+        {
+            buffPanel_Paint(DataA.SphigmoRightLegViewArray, null, GInfoArr[7].BufPanel, ChannelsScaleY[2], ChannelsMaxSize[5], e);
+        }
+        private void bufferedPanel8_Paint(object sender, PaintEventArgs e)
+        {
+            buffPanel_Paint(DataA.ApexViewArray, null, GInfoArr[8].BufPanel, ChannelsScaleY[3], ChannelsMaxSize[6], e);
+        }
+        private void bufferedPanel9_Paint(object sender, PaintEventArgs e)
+        {
+            buffPanel_Paint(DataA.PPGViewArray, null, GInfoArr[9].BufPanel, ChannelsScaleY[3], ChannelsMaxSize[7], e);
+        }
+        private void bufferedPanel10_Paint(object sender, PaintEventArgs e)
+        {
+            buffPanel_Paint(DataA.SoundViewArray, null, GInfoArr[10].BufPanel, ChannelsScaleY[3], ChannelsMaxSize[7], e);
         }
 
 
@@ -448,14 +532,14 @@ namespace ApexCardio
         private void panelGraph_Resize(object sender, EventArgs e)
         {
             UpdateGraphics();
-/*            if (ViewMode & decomposer != null)
-            {
-                UpdateScrollBar(decomposer.Data.ApexArray.Length);
-            }
-            else
-            {
-                hScrollBar1.Visible = false;
-            }*/
+            /*            if (ViewMode & decomposer != null)
+                        {
+                            UpdateScrollBar(decomposer.Data.ApexArray.Length);
+                        }
+                        else
+                        {
+                            hScrollBar1.Visible = false;
+                        }*/
         }
 
         private void butSettings_Click(object sender, EventArgs e)
@@ -536,8 +620,8 @@ namespace ApexCardio
                 butPump2start.Enabled = Connected & decomposer.DeviceTurnedOn & !decomposer.Pump2Started; ;
                 butPump1stop.Enabled = Connected & decomposer.DeviceTurnedOn;
                 butPump2stop.Enabled = Connected & decomposer.DeviceTurnedOn;
-                butPumpsStart.Enabled = Connected & decomposer.DeviceTurnedOn & (!decomposer.Pump1Started | !decomposer.Pump2Started);
-                butPumpsStop.Enabled = Connected & decomposer.DeviceTurnedOn;
+                butPumps12Start.Enabled = Connected & decomposer.DeviceTurnedOn & (!decomposer.Pump1Started | !decomposer.Pump2Started);
+                butPumps12Stop.Enabled = Connected & decomposer.DeviceTurnedOn;
             }
             else
             {
@@ -589,13 +673,13 @@ namespace ApexCardio
         private void UpdateRecInfoBox(RecordInfo riarg)
         {
             textBoxRecInfo.Clear();
-//            textBoxRecInfo.Text += "Record information" + System.Environment.NewLine + System.Environment.NewLine;
+            //            textBoxRecInfo.Text += "Record information" + System.Environment.NewLine + System.Environment.NewLine;
             textBoxRecInfo.Text += "File : " + Convert.ToChar(9) + Path.GetFileName(riarg.FileName) + System.Environment.NewLine;
             string[] lines = riarg.GetRecInfo(true);
-/*            foreach (string line in lines)
-            {
-                textBoxRecInfo.Text += line + System.Environment.NewLine;
-            }*/
+            /*            foreach (string line in lines)
+                        {
+                            textBoxRecInfo.Text += line + System.Environment.NewLine;
+                        }*/
             for (int i = 0; i < lines.Length; i++)
             {
                 string s;
@@ -610,7 +694,7 @@ namespace ApexCardio
 
         private void butNewRecord_Click(object sender, EventArgs e)
         {
-//            CurrentFile = Cfg.DataFileNum.ToString("D4");
+            //            CurrentFile = Cfg.DataFileNum.ToString("D4");
             saveFileDialog1.FileName = "";
             saveFileDialog1.InitialDirectory = Cfg.DataDir.ToString();
             saveFileDialog1.Filter = "Text files | *.txt|All files | *.*";
@@ -645,7 +729,7 @@ namespace ApexCardio
 
         private void butStartRecord_Click(object sender, EventArgs e)
         {
-//            timerDelay.Interval = Cfg.StartDelay * 1000;
+            //            timerDelay.Interval = Cfg.StartDelay * 1000;
             timerDelay.Enabled = true;
             DelayCounter = Cfg.StartDelay;
             labRecordSize.Text = "Start delay : " + DelayCounter.ToString() + " sec";
@@ -691,18 +775,18 @@ namespace ApexCardio
             UpdateRecInfoBox(CurrentRecordInfo);
             decomposer.DecomposeLineEvent -= NewLineReceived;
             decomposer.DecomposeLineEvent -= LineReceived;
-//            String fname = filestream.Name;
+            //            String fname = filestream.Name;
             decomposer.RecordStarted = false;
             decomposer = null;
-//            filestream.Close();
-//            filestream.Dispose();
+            //            filestream.Close();
+            //            filestream.Dispose();
             if (textWriter != null) textWriter.Dispose();
             string[] lines = File.ReadAllLines(Cfg.DataDir.ToString() + ApexConstants.TmpTextFile);
             File.AppendAllLines(CurrentRecordInfo.FileName, lines);
 
             ViewMode = true;
             timerRead.Enabled = false;
-//            timerPaint.Enabled = false;
+            //            timerPaint.Enabled = false;
 
             DataA = new DataArrays(lines.Length);
             decomposer = ParseData(lines, DataA, 0);
@@ -737,7 +821,7 @@ namespace ApexCardio
             textBoxRecInfo.Clear();
         }
 
-        
+
 
         private void EditRecInfo()
         {
@@ -782,8 +866,8 @@ namespace ApexCardio
             ChannelsScaleY[0] = Math.Pow(2, a / 2);
             if (ViewMode)
             {
-                if (GInfoArr[chECG1].Visible) GInfoArr[chECG1].BufPanel.Refresh();
-                if (GInfoArr[chECG2].Visible) GInfoArr[chECG2].BufPanel.Refresh();
+                if (GInfoArr[(int)ChNames.chECG1].Visible) GInfoArr[(int)ChNames.chECG1].BufPanel.Refresh();
+                if (GInfoArr[(int)ChNames.chECG2].Visible) GInfoArr[(int)ChNames.chECG2].BufPanel.Refresh();
             }
         }
 
@@ -794,8 +878,8 @@ namespace ApexCardio
             ChannelsScaleY[1] = Math.Pow(2, a / 2);
             if (ViewMode)
             {
-                if (GInfoArr[chReo1].Visible) GInfoArr[chReo1].BufPanel.Refresh();
-                if (GInfoArr[chReo2].Visible) GInfoArr[chReo2].BufPanel.Refresh();
+                if (GInfoArr[(int)ChNames.chReo1].Visible) GInfoArr[(int)ChNames.chReo1].BufPanel.Refresh();
+                if (GInfoArr[(int)ChNames.chReo2].Visible) GInfoArr[(int)ChNames.chReo2].BufPanel.Refresh();
             }
         }
 
@@ -806,8 +890,8 @@ namespace ApexCardio
             ChannelsScaleY[2] = Math.Pow(2, a / 2);
             if (ViewMode)
             {
-                if (GInfoArr[chSphigmo1].Visible) GInfoArr[chSphigmo1].BufPanel.Refresh();
-                if (GInfoArr[chSphigmo2].Visible) GInfoArr[chSphigmo2].BufPanel.Refresh();
+                if (GInfoArr[(int)ChNames.chSphigmo1].Visible) GInfoArr[(int)ChNames.chSphigmo1].BufPanel.Refresh();
+                if (GInfoArr[(int)ChNames.chSphigmo2].Visible) GInfoArr[(int)ChNames.chSphigmo2].BufPanel.Refresh();
             }
         }
 
@@ -818,7 +902,7 @@ namespace ApexCardio
             ChannelsScaleY[3] = Math.Pow(2, a / 2);
             if (ViewMode)
             {
-                if (GInfoArr[chApex].Visible) GInfoArr[chApex].BufPanel.Refresh();
+                if (GInfoArr[(int)ChNames.chApex].Visible) GInfoArr[(int)ChNames.chApex].BufPanel.Refresh();
             }
         }
 
@@ -870,7 +954,7 @@ namespace ApexCardio
                     }
                     UpdateScrollBar(size);
 
-                    DataA = new DataArrays(size+1000);
+                    DataA = new DataArrays(size + 1000);
                     decomposer = ParseData(lines, DataA, ApexConstants.HeaderSize);
                     decomposer.CountViewArrays(lines.Length - ApexConstants.HeaderSize, Cfg.FilterOn);
                     SetScale(size);
@@ -902,7 +986,7 @@ namespace ApexCardio
             r1 = DataProcessing.GetRange(DataA.Reo1ViewArray, size);
             if (GInfoArr[3].Visible)
             {
-            r2 = DataProcessing.GetRange(DataA.Reo2ViewArray, size);
+                r2 = DataProcessing.GetRange(DataA.Reo2ViewArray, size);
             }
             ChannelsMaxSize[2] = (int)(coeff * Math.Max(r1, r2));
             ChannelsMaxSize[3] = (int)(coeff * Math.Max(r1, r2));
@@ -927,7 +1011,7 @@ namespace ApexCardio
                 butFlow.Text = "Stop stream";
                 InitArraysForFlow();
 
-//                textBoxRecInfo.Clear();
+                //                textBoxRecInfo.Clear();
                 labRecordSize.Visible = false;
                 hScrollBar1.Visible = false;
             }
@@ -943,7 +1027,7 @@ namespace ApexCardio
             EditRecInfo();
         }
 
- 
+
         private void numUDplevel1_ValueChanged(object sender, EventArgs e)
         {
             Cfg.PressLevel1 = (byte)numUDplevel1.Value;
@@ -958,7 +1042,7 @@ namespace ApexCardio
             USBPort.WriteByte(Cfg.PressLevel2);
         }
 
-        private void butPumpsStart_Click(object sender, EventArgs e)
+        private void butPumps12Start_Click(object sender, EventArgs e)
         {
             USBPort.WriteByte(ApexConstants.cmdSetPressSfig1);
             USBPort.WriteByte(Cfg.PressLevel1);
@@ -1048,10 +1132,10 @@ namespace ApexCardio
         {
             DataA.RInd = 0;
             int InsideC = 0;
-//            int start = V.Visir1.X;
-//            int stop = V.Visir2.X;
+            //            int start = V.Visir1.X;
+            //            int stop = V.Visir2.X;
             int start = 0;
-            int stop = DataA.ECG1ViewArray.Length-100;
+            int stop = DataA.ECG1ViewArray.Length - 100;
             int max = 0;
             for (int i = start; i < stop; i++)
             {
@@ -1094,7 +1178,7 @@ namespace ApexCardio
         {
             const int PRInterval = 20;
             int RPos = DataA.RArray[ind];
-            int pos = RPos-3;
+            int pos = RPos - 3;
             while (DataA.ECG1ViewArray[pos] < DataA.ECG1ViewArray[pos + 1])
             {
                 pos--;
@@ -1134,6 +1218,66 @@ namespace ApexCardio
                     return ApexConstants.Apexname;
             }
             return null;
+        }
+
+        private void butBPmeas3_Click(object sender, EventArgs e)
+        {
+            USBPort.WriteByte(ApexConstants.cmdStartBP3);
+        }
+
+        private void butBPabort3_Click(object sender, EventArgs e)
+        {
+            USBPort.WriteByte(ApexConstants.cmdCancelBP3);
+        }
+
+        private void butBPmeas4_Click(object sender, EventArgs e)
+        {
+            USBPort.WriteByte(ApexConstants.cmdStartBP4);
+        }
+
+        private void butBPabort4_Click(object sender, EventArgs e)
+        {
+            USBPort.WriteByte(ApexConstants.cmdCancelBP4);
+        }
+
+        private void butPump3start_Click(object sender, EventArgs e)
+        {
+            USBPort.WriteByte(ApexConstants.cmdSetPressSfig3);
+            USBPort.WriteByte(Cfg.PressLevel3);
+            USBPort.WriteByte(ApexConstants.cmdStartSfig3);
+            if (decomposer != null)
+            {
+                decomposer.Pump3Started = true;
+            }
+        }
+
+        private void butPump4start_Click(object sender, EventArgs e)
+        {
+            USBPort.WriteByte(ApexConstants.cmdSetPressSfig4);
+            USBPort.WriteByte(Cfg.PressLevel4);
+            USBPort.WriteByte(ApexConstants.cmdStartSfig4);
+            if (decomposer != null)
+            {
+                decomposer.Pump4Started = true;
+            }
+        }
+
+        private void butPump3stop_Click(object sender, EventArgs e)
+        {
+            USBPort.WriteByte(ApexConstants.cmdStopSfig3);
+            if (decomposer != null)
+            {
+                decomposer.Pump3Started = false;
+            }
+        }
+
+        private void butPump4stop_Click(object sender, EventArgs e)
+        {
+            USBPort.WriteByte(ApexConstants.cmdStopSfig4);
+            if (decomposer != null)
+            {
+                decomposer.Pump4Started = false;
+            }
         }
     }
 }

@@ -26,6 +26,10 @@ namespace ApexCardio
             CBArr[4] = checkBox5;
             CBArr[5] = checkBox6;
             CBArr[6] = checkBox7;
+            CBArr[7] = checkBox8;
+            CBArr[8] = checkBox9;
+            CBArr[9] = checkBox10;
+            CBArr[10] = checkBox11;
             for (int i = 0; i < ApexConstants.NumOfChannels; i++)
             {
                 CBArr[i].Checked = cfg.VisibleGraphs[i];

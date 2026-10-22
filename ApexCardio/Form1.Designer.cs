@@ -28,510 +28,748 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.timerRead = new System.Windows.Forms.Timer(this.components);
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panelGraph = new System.Windows.Forms.Panel();
-            this.panelButtons = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.butPumpsStop = new System.Windows.Forms.Button();
-            this.butPumpsStart = new System.Windows.Forms.Button();
-            this.labBP2 = new System.Windows.Forms.Label();
-            this.labBP1 = new System.Windows.Forms.Label();
-            this.butBPabort2 = new System.Windows.Forms.Button();
-            this.butBPmeas2 = new System.Windows.Forms.Button();
-            this.labStatus = new System.Windows.Forms.Label();
-            this.butBPabort1 = new System.Windows.Forms.Button();
-            this.butBPMeas1 = new System.Windows.Forms.Button();
-            this.butNewRecord = new System.Windows.Forms.Button();
-            this.pbRecordProgress = new System.Windows.Forms.ProgressBar();
-            this.butPump2stop = new System.Windows.Forms.Button();
-            this.butPump2start = new System.Windows.Forms.Button();
-            this.butPump1stop = new System.Windows.Forms.Button();
-            this.butPump1start = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.numUDplevel2 = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.numUDplevel1 = new System.Windows.Forms.NumericUpDown();
-            this.labP3 = new System.Windows.Forms.Label();
-            this.labP2 = new System.Windows.Forms.Label();
-            this.labP1 = new System.Windows.Forms.Label();
-            this.butEditRecInfo = new System.Windows.Forms.Button();
-            this.butFlow = new System.Windows.Forms.Button();
-            this.butOpenFile = new System.Windows.Forms.Button();
-            this.textBoxRecInfo = new System.Windows.Forms.TextBox();
-            this.labRecordSize = new System.Windows.Forms.Label();
-            this.butSaveRecord = new System.Windows.Forms.Button();
-            this.butStartRecord = new System.Windows.Forms.Button();
-            this.butSettings = new System.Windows.Forms.Button();
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
-            this.labConnected = new System.Windows.Forms.Label();
-            this.panelAmp = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.timerPaint = new System.Windows.Forms.Timer(this.components);
-            this.timerStatus = new System.Windows.Forms.Timer(this.components);
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.timerDelay = new System.Windows.Forms.Timer(this.components);
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panelButtons.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDplevel2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDplevel1)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            timerRead = new System.Windows.Forms.Timer(components);
+            tableLayoutPanel1 = new TableLayoutPanel();
+            panelGraph = new Panel();
+            panelButtons = new Panel();
+            butPumps34Stop = new Button();
+            butPumps34Start = new Button();
+            butPump4stop = new Button();
+            butPump4start = new Button();
+            butPump3stop = new Button();
+            butPump3start = new Button();
+            label4 = new Label();
+            numUDplevel4 = new NumericUpDown();
+            label5 = new Label();
+            numUDplevel3 = new NumericUpDown();
+            labBP4 = new Label();
+            labBP3 = new Label();
+            butBPabort4 = new Button();
+            butBPmeas4 = new Button();
+            butBPabort3 = new Button();
+            butBPmeas3 = new Button();
+            label1 = new Label();
+            butPumps12Stop = new Button();
+            butPumps12Start = new Button();
+            labBP2 = new Label();
+            labBP1 = new Label();
+            butBPabort2 = new Button();
+            butBPmeas2 = new Button();
+            labStatus = new Label();
+            butBPabort1 = new Button();
+            butBPMeas1 = new Button();
+            butNewRecord = new Button();
+            pbRecordProgress = new ProgressBar();
+            butPump2stop = new Button();
+            butPump2start = new Button();
+            butPump1stop = new Button();
+            butPump1start = new Button();
+            label3 = new Label();
+            numUDplevel2 = new NumericUpDown();
+            label2 = new Label();
+            numUDplevel1 = new NumericUpDown();
+            labP3 = new Label();
+            labP2 = new Label();
+            labP1 = new Label();
+            butEditRecInfo = new Button();
+            butFlow = new Button();
+            butOpenFile = new Button();
+            textBoxRecInfo = new TextBox();
+            labRecordSize = new Label();
+            butSaveRecord = new Button();
+            butStartRecord = new Button();
+            butSettings = new Button();
+            hScrollBar1 = new HScrollBar();
+            labConnected = new Label();
+            panelAmp = new Panel();
+            panel1 = new Panel();
+            timerPaint = new System.Windows.Forms.Timer(components);
+            timerStatus = new System.Windows.Forms.Timer(components);
+            openFileDialog1 = new OpenFileDialog();
+            saveFileDialog1 = new SaveFileDialog();
+            timerDelay = new System.Windows.Forms.Timer(components);
+            tableLayoutPanel1.SuspendLayout();
+            panelButtons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numUDplevel4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numUDplevel3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numUDplevel2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numUDplevel1).BeginInit();
+            SuspendLayout();
             // 
             // timerRead
             // 
-            this.timerRead.Enabled = true;
-            this.timerRead.Tick += new System.EventHandler(this.timerRead_Tick);
+            timerRead.Enabled = true;
+            timerRead.Tick += timerRead_Tick;
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.panelGraph, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panelButtons, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.hScrollBar1, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.labConnected, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panelAmp, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 2, 2);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(844, 502);
-            this.tableLayoutPanel1.TabIndex = 1;
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 350F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 47F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(panelGraph, 2, 0);
+            tableLayoutPanel1.Controls.Add(panelButtons, 0, 0);
+            tableLayoutPanel1.Controls.Add(hScrollBar1, 2, 1);
+            tableLayoutPanel1.Controls.Add(labConnected, 0, 1);
+            tableLayoutPanel1.Controls.Add(panelAmp, 1, 0);
+            tableLayoutPanel1.Controls.Add(panel1, 2, 2);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(4, 3, 4, 3);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 46F));
+            tableLayoutPanel1.Size = new Size(985, 774);
+            tableLayoutPanel1.TabIndex = 1;
             // 
             // panelGraph
             // 
-            this.panelGraph.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelGraph.Location = new System.Drawing.Point(343, 3);
-            this.panelGraph.Name = "panelGraph";
-            this.panelGraph.Size = new System.Drawing.Size(498, 431);
-            this.panelGraph.TabIndex = 0;
-            this.panelGraph.Resize += new System.EventHandler(this.panelGraph_Resize);
+            panelGraph.Dock = DockStyle.Fill;
+            panelGraph.Location = new Point(401, 3);
+            panelGraph.Margin = new Padding(4, 3, 4, 3);
+            panelGraph.Name = "panelGraph";
+            panelGraph.Size = new Size(580, 693);
+            panelGraph.TabIndex = 0;
+            panelGraph.Resize += panelGraph_Resize;
             // 
             // panelButtons
             // 
-            this.panelButtons.Controls.Add(this.label1);
-            this.panelButtons.Controls.Add(this.butPumpsStop);
-            this.panelButtons.Controls.Add(this.butPumpsStart);
-            this.panelButtons.Controls.Add(this.labBP2);
-            this.panelButtons.Controls.Add(this.labBP1);
-            this.panelButtons.Controls.Add(this.butBPabort2);
-            this.panelButtons.Controls.Add(this.butBPmeas2);
-            this.panelButtons.Controls.Add(this.labStatus);
-            this.panelButtons.Controls.Add(this.butBPabort1);
-            this.panelButtons.Controls.Add(this.butBPMeas1);
-            this.panelButtons.Controls.Add(this.butNewRecord);
-            this.panelButtons.Controls.Add(this.pbRecordProgress);
-            this.panelButtons.Controls.Add(this.butPump2stop);
-            this.panelButtons.Controls.Add(this.butPump2start);
-            this.panelButtons.Controls.Add(this.butPump1stop);
-            this.panelButtons.Controls.Add(this.butPump1start);
-            this.panelButtons.Controls.Add(this.label3);
-            this.panelButtons.Controls.Add(this.numUDplevel2);
-            this.panelButtons.Controls.Add(this.label2);
-            this.panelButtons.Controls.Add(this.numUDplevel1);
-            this.panelButtons.Controls.Add(this.labP3);
-            this.panelButtons.Controls.Add(this.labP2);
-            this.panelButtons.Controls.Add(this.labP1);
-            this.panelButtons.Controls.Add(this.butEditRecInfo);
-            this.panelButtons.Controls.Add(this.butFlow);
-            this.panelButtons.Controls.Add(this.butOpenFile);
-            this.panelButtons.Controls.Add(this.textBoxRecInfo);
-            this.panelButtons.Controls.Add(this.labRecordSize);
-            this.panelButtons.Controls.Add(this.butSaveRecord);
-            this.panelButtons.Controls.Add(this.butStartRecord);
-            this.panelButtons.Controls.Add(this.butSettings);
-            this.panelButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelButtons.Location = new System.Drawing.Point(3, 3);
-            this.panelButtons.Name = "panelButtons";
-            this.panelButtons.Size = new System.Drawing.Size(294, 431);
-            this.panelButtons.TabIndex = 1;
+            panelButtons.Controls.Add(butPumps34Stop);
+            panelButtons.Controls.Add(butPumps34Start);
+            panelButtons.Controls.Add(butPump4stop);
+            panelButtons.Controls.Add(butPump4start);
+            panelButtons.Controls.Add(butPump3stop);
+            panelButtons.Controls.Add(butPump3start);
+            panelButtons.Controls.Add(label4);
+            panelButtons.Controls.Add(numUDplevel4);
+            panelButtons.Controls.Add(label5);
+            panelButtons.Controls.Add(numUDplevel3);
+            panelButtons.Controls.Add(labBP4);
+            panelButtons.Controls.Add(labBP3);
+            panelButtons.Controls.Add(butBPabort4);
+            panelButtons.Controls.Add(butBPmeas4);
+            panelButtons.Controls.Add(butBPabort3);
+            panelButtons.Controls.Add(butBPmeas3);
+            panelButtons.Controls.Add(label1);
+            panelButtons.Controls.Add(butPumps12Stop);
+            panelButtons.Controls.Add(butPumps12Start);
+            panelButtons.Controls.Add(labBP2);
+            panelButtons.Controls.Add(labBP1);
+            panelButtons.Controls.Add(butBPabort2);
+            panelButtons.Controls.Add(butBPmeas2);
+            panelButtons.Controls.Add(labStatus);
+            panelButtons.Controls.Add(butBPabort1);
+            panelButtons.Controls.Add(butBPMeas1);
+            panelButtons.Controls.Add(butNewRecord);
+            panelButtons.Controls.Add(pbRecordProgress);
+            panelButtons.Controls.Add(butPump2stop);
+            panelButtons.Controls.Add(butPump2start);
+            panelButtons.Controls.Add(butPump1stop);
+            panelButtons.Controls.Add(butPump1start);
+            panelButtons.Controls.Add(label3);
+            panelButtons.Controls.Add(numUDplevel2);
+            panelButtons.Controls.Add(label2);
+            panelButtons.Controls.Add(numUDplevel1);
+            panelButtons.Controls.Add(labP3);
+            panelButtons.Controls.Add(labP2);
+            panelButtons.Controls.Add(labP1);
+            panelButtons.Controls.Add(butEditRecInfo);
+            panelButtons.Controls.Add(butFlow);
+            panelButtons.Controls.Add(butOpenFile);
+            panelButtons.Controls.Add(textBoxRecInfo);
+            panelButtons.Controls.Add(labRecordSize);
+            panelButtons.Controls.Add(butSaveRecord);
+            panelButtons.Controls.Add(butStartRecord);
+            panelButtons.Controls.Add(butSettings);
+            panelButtons.Dock = DockStyle.Fill;
+            panelButtons.Location = new Point(4, 3);
+            panelButtons.Margin = new Padding(4, 3, 4, 3);
+            panelButtons.Name = "panelButtons";
+            panelButtons.Size = new Size(342, 693);
+            panelButtons.TabIndex = 1;
+            // 
+            // butPumps34Stop
+            // 
+            butPumps34Stop.Location = new Point(254, 277);
+            butPumps34Stop.Margin = new Padding(4, 3, 4, 3);
+            butPumps34Stop.Name = "butPumps34Stop";
+            butPumps34Stop.Size = new Size(23, 60);
+            butPumps34Stop.TabIndex = 48;
+            butPumps34Stop.Text = "X";
+            butPumps34Stop.UseVisualStyleBackColor = true;
+            // 
+            // butPumps34Start
+            // 
+            butPumps34Start.Location = new Point(180, 277);
+            butPumps34Start.Margin = new Padding(4, 3, 4, 3);
+            butPumps34Start.Name = "butPumps34Start";
+            butPumps34Start.Size = new Size(23, 60);
+            butPumps34Start.TabIndex = 47;
+            butPumps34Start.Text = ">";
+            butPumps34Start.UseVisualStyleBackColor = true;
+            // 
+            // butPump4stop
+            // 
+            butPump4stop.Location = new Point(279, 310);
+            butPump4stop.Margin = new Padding(4, 3, 4, 3);
+            butPump4stop.Name = "butPump4stop";
+            butPump4stop.Size = new Size(43, 27);
+            butPump4stop.TabIndex = 46;
+            butPump4stop.Text = "Stop";
+            butPump4stop.UseVisualStyleBackColor = true;
+            butPump4stop.Click += butPump4stop_Click;
+            // 
+            // butPump4start
+            // 
+            butPump4start.Location = new Point(203, 310);
+            butPump4start.Margin = new Padding(4, 3, 4, 3);
+            butPump4start.Name = "butPump4start";
+            butPump4start.Size = new Size(43, 27);
+            butPump4start.TabIndex = 45;
+            butPump4start.Text = "Start";
+            butPump4start.UseVisualStyleBackColor = true;
+            butPump4start.Click += butPump4start_Click;
+            // 
+            // butPump3stop
+            // 
+            butPump3stop.Location = new Point(279, 277);
+            butPump3stop.Margin = new Padding(4, 3, 4, 3);
+            butPump3stop.Name = "butPump3stop";
+            butPump3stop.Size = new Size(43, 27);
+            butPump3stop.TabIndex = 44;
+            butPump3stop.Text = "Stop";
+            butPump3stop.UseVisualStyleBackColor = true;
+            butPump3stop.Click += butPump3stop_Click;
+            // 
+            // butPump3start
+            // 
+            butPump3start.Location = new Point(203, 277);
+            butPump3start.Margin = new Padding(4, 3, 4, 3);
+            butPump3start.Name = "butPump3start";
+            butPump3start.Size = new Size(43, 27);
+            butPump3start.TabIndex = 43;
+            butPump3start.Text = "Start";
+            butPump3start.UseVisualStyleBackColor = true;
+            butPump3start.Click += butPump3start_Click;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(13, 316);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(87, 15);
+            label4.TabIndex = 42;
+            label4.Text = "Pressure level 4";
+            // 
+            // numUDplevel4
+            // 
+            numUDplevel4.Location = new Point(117, 314);
+            numUDplevel4.Margin = new Padding(4, 3, 4, 3);
+            numUDplevel4.Name = "numUDplevel4";
+            numUDplevel4.Size = new Size(56, 23);
+            numUDplevel4.TabIndex = 41;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(13, 283);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(87, 15);
+            label5.TabIndex = 40;
+            label5.Text = "Pressure level 3";
+            // 
+            // numUDplevel3
+            // 
+            numUDplevel3.Location = new Point(117, 280);
+            numUDplevel3.Margin = new Padding(4, 3, 4, 3);
+            numUDplevel3.Name = "numUDplevel3";
+            numUDplevel3.Size = new Size(56, 23);
+            numUDplevel3.TabIndex = 39;
+            // 
+            // labBP4
+            // 
+            labBP4.AutoSize = true;
+            labBP4.Location = new Point(224, 184);
+            labBP4.Margin = new Padding(4, 0, 4, 0);
+            labBP4.Name = "labBP4";
+            labBP4.Size = new Size(38, 15);
+            labBP4.TabIndex = 38;
+            labBP4.Text = "ABP 4";
+            // 
+            // labBP3
+            // 
+            labBP3.AutoSize = true;
+            labBP3.Location = new Point(224, 150);
+            labBP3.Margin = new Padding(4, 0, 4, 0);
+            labBP3.Name = "labBP3";
+            labBP3.Size = new Size(38, 15);
+            labBP3.TabIndex = 37;
+            labBP3.Text = "ABP 3";
+            // 
+            // butBPabort4
+            // 
+            butBPabort4.Location = new Point(115, 178);
+            butBPabort4.Margin = new Padding(4, 3, 4, 3);
+            butBPabort4.Name = "butBPabort4";
+            butBPabort4.Size = new Size(88, 27);
+            butBPabort4.TabIndex = 36;
+            butBPabort4.Text = "Abort ABP";
+            butBPabort4.UseVisualStyleBackColor = true;
+            butBPabort4.Click += butBPabort4_Click;
+            // 
+            // butBPmeas4
+            // 
+            butBPmeas4.Location = new Point(15, 178);
+            butBPmeas4.Margin = new Padding(4, 3, 4, 3);
+            butBPmeas4.Name = "butBPmeas4";
+            butBPmeas4.Size = new Size(88, 27);
+            butBPmeas4.TabIndex = 35;
+            butBPmeas4.Text = "Start ABP 2";
+            butBPmeas4.UseVisualStyleBackColor = true;
+            butBPmeas4.Click += butBPmeas4_Click;
+            // 
+            // butBPabort3
+            // 
+            butBPabort3.Location = new Point(115, 144);
+            butBPabort3.Margin = new Padding(4, 3, 4, 3);
+            butBPabort3.Name = "butBPabort3";
+            butBPabort3.Size = new Size(88, 27);
+            butBPabort3.TabIndex = 34;
+            butBPabort3.Text = "Abort ABP";
+            butBPabort3.UseVisualStyleBackColor = true;
+            butBPabort3.Click += butBPabort3_Click;
+            // 
+            // butBPmeas3
+            // 
+            butBPmeas3.Location = new Point(15, 144);
+            butBPmeas3.Margin = new Padding(4, 3, 4, 3);
+            butBPmeas3.Name = "butBPmeas3";
+            butBPmeas3.Size = new Size(88, 27);
+            butBPmeas3.TabIndex = 33;
+            butBPmeas3.Text = "Start ABP 3";
+            butBPmeas3.UseVisualStyleBackColor = true;
+            butBPmeas3.Click += butBPmeas3_Click;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(116, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "label1";
+            label1.AutoSize = true;
+            label1.Location = new Point(135, 16);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(38, 15);
+            label1.TabIndex = 32;
+            label1.Text = "label1";
             // 
-            // butPumpsStop
+            // butPumps12Stop
             // 
-            this.butPumpsStop.Location = new System.Drawing.Point(220, 182);
-            this.butPumpsStop.Name = "butPumpsStop";
-            this.butPumpsStop.Size = new System.Drawing.Size(20, 52);
-            this.butPumpsStop.TabIndex = 31;
-            this.butPumpsStop.Text = "X";
-            this.butPumpsStop.UseVisualStyleBackColor = true;
-            this.butPumpsStop.Click += new System.EventHandler(this.butPumpsStop_Click);
+            butPumps12Stop.Location = new Point(254, 211);
+            butPumps12Stop.Margin = new Padding(4, 3, 4, 3);
+            butPumps12Stop.Name = "butPumps12Stop";
+            butPumps12Stop.Size = new Size(23, 60);
+            butPumps12Stop.TabIndex = 31;
+            butPumps12Stop.Text = "X";
+            butPumps12Stop.UseVisualStyleBackColor = true;
+            butPumps12Stop.Click += butPumpsStop_Click;
             // 
-            // butPumpsStart
+            // butPumps12Start
             // 
-            this.butPumpsStart.Location = new System.Drawing.Point(157, 182);
-            this.butPumpsStart.Name = "butPumpsStart";
-            this.butPumpsStart.Size = new System.Drawing.Size(20, 52);
-            this.butPumpsStart.TabIndex = 30;
-            this.butPumpsStart.Text = ">";
-            this.butPumpsStart.UseVisualStyleBackColor = true;
-            this.butPumpsStart.Click += new System.EventHandler(this.butPumpsStart_Click);
+            butPumps12Start.Location = new Point(180, 211);
+            butPumps12Start.Margin = new Padding(4, 3, 4, 3);
+            butPumps12Start.Name = "butPumps12Start";
+            butPumps12Start.Size = new Size(23, 60);
+            butPumps12Start.TabIndex = 30;
+            butPumps12Start.Text = ">";
+            butPumps12Start.UseVisualStyleBackColor = true;
+            butPumps12Start.Click += butPumps12Start_Click;
             // 
             // labBP2
             // 
-            this.labBP2.AutoSize = true;
-            this.labBP2.Location = new System.Drawing.Point(192, 101);
-            this.labBP2.Name = "labBP2";
-            this.labBP2.Size = new System.Drawing.Size(37, 13);
-            this.labBP2.TabIndex = 29;
-            this.labBP2.Text = "ABP 2";
+            labBP2.AutoSize = true;
+            labBP2.Location = new Point(224, 117);
+            labBP2.Margin = new Padding(4, 0, 4, 0);
+            labBP2.Name = "labBP2";
+            labBP2.Size = new Size(38, 15);
+            labBP2.TabIndex = 29;
+            labBP2.Text = "ABP 2";
             // 
             // labBP1
             // 
-            this.labBP1.AutoSize = true;
-            this.labBP1.Location = new System.Drawing.Point(192, 72);
-            this.labBP1.Name = "labBP1";
-            this.labBP1.Size = new System.Drawing.Size(37, 13);
-            this.labBP1.TabIndex = 28;
-            this.labBP1.Text = "ABP 1";
+            labBP1.AutoSize = true;
+            labBP1.Location = new Point(224, 83);
+            labBP1.Margin = new Padding(4, 0, 4, 0);
+            labBP1.Name = "labBP1";
+            labBP1.Size = new Size(38, 15);
+            labBP1.TabIndex = 28;
+            labBP1.Text = "ABP 1";
             // 
             // butBPabort2
             // 
-            this.butBPabort2.Location = new System.Drawing.Point(99, 96);
-            this.butBPabort2.Name = "butBPabort2";
-            this.butBPabort2.Size = new System.Drawing.Size(75, 23);
-            this.butBPabort2.TabIndex = 27;
-            this.butBPabort2.Text = "Abort ABP";
-            this.butBPabort2.UseVisualStyleBackColor = true;
-            this.butBPabort2.Click += new System.EventHandler(this.butBPabort2_Click);
+            butBPabort2.Location = new Point(115, 111);
+            butBPabort2.Margin = new Padding(4, 3, 4, 3);
+            butBPabort2.Name = "butBPabort2";
+            butBPabort2.Size = new Size(88, 27);
+            butBPabort2.TabIndex = 27;
+            butBPabort2.Text = "Abort ABP";
+            butBPabort2.UseVisualStyleBackColor = true;
+            butBPabort2.Click += butBPabort2_Click;
             // 
             // butBPmeas2
             // 
-            this.butBPmeas2.Location = new System.Drawing.Point(13, 96);
-            this.butBPmeas2.Name = "butBPmeas2";
-            this.butBPmeas2.Size = new System.Drawing.Size(75, 23);
-            this.butBPmeas2.TabIndex = 26;
-            this.butBPmeas2.Text = "Start ABP 2";
-            this.butBPmeas2.UseVisualStyleBackColor = true;
-            this.butBPmeas2.Click += new System.EventHandler(this.butBPmeas2_Click);
+            butBPmeas2.Location = new Point(15, 111);
+            butBPmeas2.Margin = new Padding(4, 3, 4, 3);
+            butBPmeas2.Name = "butBPmeas2";
+            butBPmeas2.Size = new Size(88, 27);
+            butBPmeas2.TabIndex = 26;
+            butBPmeas2.Text = "Start ABP 2";
+            butBPmeas2.UseVisualStyleBackColor = true;
+            butBPmeas2.Click += butBPmeas2_Click;
             // 
             // labStatus
             // 
-            this.labStatus.AutoSize = true;
-            this.labStatus.Location = new System.Drawing.Point(116, 426);
-            this.labStatus.Name = "labStatus";
-            this.labStatus.Size = new System.Drawing.Size(35, 13);
-            this.labStatus.TabIndex = 25;
-            this.labStatus.Text = "label1";
+            labStatus.AutoSize = true;
+            labStatus.Location = new Point(131, 647);
+            labStatus.Margin = new Padding(4, 0, 4, 0);
+            labStatus.Name = "labStatus";
+            labStatus.Size = new Size(38, 15);
+            labStatus.TabIndex = 25;
+            labStatus.Text = "label1";
             // 
             // butBPabort1
             // 
-            this.butBPabort1.Location = new System.Drawing.Point(99, 67);
-            this.butBPabort1.Name = "butBPabort1";
-            this.butBPabort1.Size = new System.Drawing.Size(75, 23);
-            this.butBPabort1.TabIndex = 24;
-            this.butBPabort1.Text = "Abort ABP";
-            this.butBPabort1.UseVisualStyleBackColor = true;
-            this.butBPabort1.Click += new System.EventHandler(this.butBPabort_Click);
+            butBPabort1.Location = new Point(115, 77);
+            butBPabort1.Margin = new Padding(4, 3, 4, 3);
+            butBPabort1.Name = "butBPabort1";
+            butBPabort1.Size = new Size(88, 27);
+            butBPabort1.TabIndex = 24;
+            butBPabort1.Text = "Abort ABP";
+            butBPabort1.UseVisualStyleBackColor = true;
+            butBPabort1.Click += butBPabort_Click;
             // 
             // butBPMeas1
             // 
-            this.butBPMeas1.Location = new System.Drawing.Point(13, 67);
-            this.butBPMeas1.Name = "butBPMeas1";
-            this.butBPMeas1.Size = new System.Drawing.Size(75, 23);
-            this.butBPMeas1.TabIndex = 23;
-            this.butBPMeas1.Text = "Start ABP 1";
-            this.butBPMeas1.UseVisualStyleBackColor = true;
-            this.butBPMeas1.Click += new System.EventHandler(this.butBPMeas_Click);
+            butBPMeas1.Location = new Point(15, 77);
+            butBPMeas1.Margin = new Padding(4, 3, 4, 3);
+            butBPMeas1.Name = "butBPMeas1";
+            butBPMeas1.Size = new Size(88, 27);
+            butBPMeas1.TabIndex = 23;
+            butBPMeas1.Text = "Start ABP 1";
+            butBPMeas1.UseVisualStyleBackColor = true;
+            butBPMeas1.Click += butBPMeas_Click;
             // 
             // butNewRecord
             // 
-            this.butNewRecord.Location = new System.Drawing.Point(13, 38);
-            this.butNewRecord.Name = "butNewRecord";
-            this.butNewRecord.Size = new System.Drawing.Size(75, 23);
-            this.butNewRecord.TabIndex = 22;
-            this.butNewRecord.Text = "New record";
-            this.butNewRecord.UseVisualStyleBackColor = true;
-            this.butNewRecord.Click += new System.EventHandler(this.butNewRecord_Click);
+            butNewRecord.Location = new Point(15, 44);
+            butNewRecord.Margin = new Padding(4, 3, 4, 3);
+            butNewRecord.Name = "butNewRecord";
+            butNewRecord.Size = new Size(88, 27);
+            butNewRecord.TabIndex = 22;
+            butNewRecord.Text = "New record";
+            butNewRecord.UseVisualStyleBackColor = true;
+            butNewRecord.Click += butNewRecord_Click;
             // 
             // pbRecordProgress
             // 
-            this.pbRecordProgress.Location = new System.Drawing.Point(99, 125);
-            this.pbRecordProgress.Name = "pbRecordProgress";
-            this.pbRecordProgress.Size = new System.Drawing.Size(180, 23);
-            this.pbRecordProgress.TabIndex = 21;
-            this.pbRecordProgress.Visible = false;
+            pbRecordProgress.Location = new Point(112, 376);
+            pbRecordProgress.Margin = new Padding(4, 3, 4, 3);
+            pbRecordProgress.Name = "pbRecordProgress";
+            pbRecordProgress.Size = new Size(210, 27);
+            pbRecordProgress.TabIndex = 21;
+            pbRecordProgress.Visible = false;
             // 
             // butPump2stop
             // 
-            this.butPump2stop.Location = new System.Drawing.Point(242, 211);
-            this.butPump2stop.Name = "butPump2stop";
-            this.butPump2stop.Size = new System.Drawing.Size(37, 23);
-            this.butPump2stop.TabIndex = 20;
-            this.butPump2stop.Text = "Stop";
-            this.butPump2stop.UseVisualStyleBackColor = true;
-            this.butPump2stop.Click += new System.EventHandler(this.butPump2stop_Click);
+            butPump2stop.Location = new Point(279, 244);
+            butPump2stop.Margin = new Padding(4, 3, 4, 3);
+            butPump2stop.Name = "butPump2stop";
+            butPump2stop.Size = new Size(43, 27);
+            butPump2stop.TabIndex = 20;
+            butPump2stop.Text = "Stop";
+            butPump2stop.UseVisualStyleBackColor = true;
+            butPump2stop.Click += butPump2stop_Click;
             // 
             // butPump2start
             // 
-            this.butPump2start.Location = new System.Drawing.Point(177, 211);
-            this.butPump2start.Name = "butPump2start";
-            this.butPump2start.Size = new System.Drawing.Size(37, 23);
-            this.butPump2start.TabIndex = 19;
-            this.butPump2start.Text = "Start";
-            this.butPump2start.UseVisualStyleBackColor = true;
-            this.butPump2start.Click += new System.EventHandler(this.butPump2start_Click);
+            butPump2start.Location = new Point(203, 244);
+            butPump2start.Margin = new Padding(4, 3, 4, 3);
+            butPump2start.Name = "butPump2start";
+            butPump2start.Size = new Size(43, 27);
+            butPump2start.TabIndex = 19;
+            butPump2start.Text = "Start";
+            butPump2start.UseVisualStyleBackColor = true;
+            butPump2start.Click += butPump2start_Click;
             // 
             // butPump1stop
             // 
-            this.butPump1stop.Location = new System.Drawing.Point(242, 182);
-            this.butPump1stop.Name = "butPump1stop";
-            this.butPump1stop.Size = new System.Drawing.Size(37, 23);
-            this.butPump1stop.TabIndex = 18;
-            this.butPump1stop.Text = "Stop";
-            this.butPump1stop.UseVisualStyleBackColor = true;
-            this.butPump1stop.Click += new System.EventHandler(this.butPump1stop_Click);
+            butPump1stop.Location = new Point(279, 211);
+            butPump1stop.Margin = new Padding(4, 3, 4, 3);
+            butPump1stop.Name = "butPump1stop";
+            butPump1stop.Size = new Size(43, 27);
+            butPump1stop.TabIndex = 18;
+            butPump1stop.Text = "Stop";
+            butPump1stop.UseVisualStyleBackColor = true;
+            butPump1stop.Click += butPump1stop_Click;
             // 
             // butPump1start
             // 
-            this.butPump1start.Location = new System.Drawing.Point(177, 182);
-            this.butPump1start.Name = "butPump1start";
-            this.butPump1start.Size = new System.Drawing.Size(37, 23);
-            this.butPump1start.TabIndex = 17;
-            this.butPump1start.Text = "Start";
-            this.butPump1start.UseVisualStyleBackColor = true;
-            this.butPump1start.Click += new System.EventHandler(this.butPump1start_Click);
+            butPump1start.Location = new Point(203, 211);
+            butPump1start.Margin = new Padding(4, 3, 4, 3);
+            butPump1start.Name = "butPump1start";
+            butPump1start.Size = new Size(43, 27);
+            butPump1start.TabIndex = 17;
+            butPump1start.Text = "Start";
+            butPump1start.UseVisualStyleBackColor = true;
+            butPump1start.Click += butPump1start_Click;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 216);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 13);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "Pressure level 2";
+            label3.AutoSize = true;
+            label3.Location = new Point(13, 250);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(87, 15);
+            label3.TabIndex = 16;
+            label3.Text = "Pressure level 2";
             // 
             // numUDplevel2
             // 
-            this.numUDplevel2.Location = new System.Drawing.Point(103, 214);
-            this.numUDplevel2.Name = "numUDplevel2";
-            this.numUDplevel2.Size = new System.Drawing.Size(48, 20);
-            this.numUDplevel2.TabIndex = 15;
-            this.numUDplevel2.ValueChanged += new System.EventHandler(this.numUDplevel2_ValueChanged);
+            numUDplevel2.Location = new Point(117, 248);
+            numUDplevel2.Margin = new Padding(4, 3, 4, 3);
+            numUDplevel2.Name = "numUDplevel2";
+            numUDplevel2.Size = new Size(56, 23);
+            numUDplevel2.TabIndex = 15;
+            numUDplevel2.ValueChanged += numUDplevel2_ValueChanged;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 187);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Pressure level 1";
+            label2.AutoSize = true;
+            label2.Location = new Point(13, 217);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(87, 15);
+            label2.TabIndex = 14;
+            label2.Text = "Pressure level 1";
             // 
             // numUDplevel1
             // 
-            this.numUDplevel1.Location = new System.Drawing.Point(103, 185);
-            this.numUDplevel1.Name = "numUDplevel1";
-            this.numUDplevel1.Size = new System.Drawing.Size(48, 20);
-            this.numUDplevel1.TabIndex = 13;
-            this.numUDplevel1.ValueChanged += new System.EventHandler(this.numUDplevel1_ValueChanged);
+            numUDplevel1.Location = new Point(117, 214);
+            numUDplevel1.Margin = new Padding(4, 3, 4, 3);
+            numUDplevel1.Name = "numUDplevel1";
+            numUDplevel1.Size = new Size(56, 23);
+            numUDplevel1.TabIndex = 13;
+            numUDplevel1.ValueChanged += numUDplevel1_ValueChanged;
             // 
             // labP3
             // 
-            this.labP3.AutoSize = true;
-            this.labP3.Location = new System.Drawing.Point(230, 449);
-            this.labP3.Name = "labP3";
-            this.labP3.Size = new System.Drawing.Size(20, 13);
-            this.labP3.TabIndex = 12;
-            this.labP3.Text = "P3";
-            this.labP3.Visible = false;
+            labP3.AutoSize = true;
+            labP3.Location = new Point(264, 673);
+            labP3.Margin = new Padding(4, 0, 4, 0);
+            labP3.Name = "labP3";
+            labP3.Size = new Size(20, 15);
+            labP3.TabIndex = 12;
+            labP3.Text = "P3";
+            labP3.Visible = false;
             // 
             // labP2
             // 
-            this.labP2.AutoSize = true;
-            this.labP2.Location = new System.Drawing.Point(230, 436);
-            this.labP2.Name = "labP2";
-            this.labP2.Size = new System.Drawing.Size(20, 13);
-            this.labP2.TabIndex = 11;
-            this.labP2.Text = "P2";
-            this.labP2.Visible = false;
+            labP2.AutoSize = true;
+            labP2.Location = new Point(264, 658);
+            labP2.Margin = new Padding(4, 0, 4, 0);
+            labP2.Name = "labP2";
+            labP2.Size = new Size(20, 15);
+            labP2.TabIndex = 11;
+            labP2.Text = "P2";
+            labP2.Visible = false;
             // 
             // labP1
             // 
-            this.labP1.AutoSize = true;
-            this.labP1.Location = new System.Drawing.Point(230, 423);
-            this.labP1.Name = "labP1";
-            this.labP1.Size = new System.Drawing.Size(20, 13);
-            this.labP1.TabIndex = 10;
-            this.labP1.Text = "P1";
-            this.labP1.Visible = false;
+            labP1.AutoSize = true;
+            labP1.Location = new Point(264, 643);
+            labP1.Margin = new Padding(4, 0, 4, 0);
+            labP1.Name = "labP1";
+            labP1.Size = new Size(20, 15);
+            labP1.TabIndex = 10;
+            labP1.Text = "P1";
+            labP1.Visible = false;
             // 
             // butEditRecInfo
             // 
-            this.butEditRecInfo.Location = new System.Drawing.Point(17, 426);
-            this.butEditRecInfo.Name = "butEditRecInfo";
-            this.butEditRecInfo.Size = new System.Drawing.Size(75, 23);
-            this.butEditRecInfo.TabIndex = 2;
-            this.butEditRecInfo.Text = "Edit";
-            this.butEditRecInfo.UseVisualStyleBackColor = true;
-            this.butEditRecInfo.Click += new System.EventHandler(this.butEditRecInfo_Click);
+            butEditRecInfo.Location = new Point(16, 647);
+            butEditRecInfo.Margin = new Padding(4, 3, 4, 3);
+            butEditRecInfo.Name = "butEditRecInfo";
+            butEditRecInfo.Size = new Size(88, 27);
+            butEditRecInfo.TabIndex = 2;
+            butEditRecInfo.Text = "Edit";
+            butEditRecInfo.UseVisualStyleBackColor = true;
+            butEditRecInfo.Click += butEditRecInfo_Click;
             // 
             // butFlow
             // 
-            this.butFlow.Location = new System.Drawing.Point(13, 9);
-            this.butFlow.Name = "butFlow";
-            this.butFlow.Size = new System.Drawing.Size(75, 23);
-            this.butFlow.TabIndex = 9;
-            this.butFlow.Text = "Stop flow";
-            this.butFlow.UseVisualStyleBackColor = true;
-            this.butFlow.Click += new System.EventHandler(this.butFlow_Click);
+            butFlow.Location = new Point(15, 10);
+            butFlow.Margin = new Padding(4, 3, 4, 3);
+            butFlow.Name = "butFlow";
+            butFlow.Size = new Size(88, 27);
+            butFlow.TabIndex = 9;
+            butFlow.Text = "Stop flow";
+            butFlow.UseVisualStyleBackColor = true;
+            butFlow.Click += butFlow_Click;
             // 
             // butOpenFile
             // 
-            this.butOpenFile.Location = new System.Drawing.Point(204, 38);
-            this.butOpenFile.Name = "butOpenFile";
-            this.butOpenFile.Size = new System.Drawing.Size(75, 23);
-            this.butOpenFile.TabIndex = 8;
-            this.butOpenFile.Text = "OpenFile";
-            this.butOpenFile.UseVisualStyleBackColor = true;
-            this.butOpenFile.Click += new System.EventHandler(this.butOpenFile_Click);
+            butOpenFile.Location = new Point(238, 44);
+            butOpenFile.Margin = new Padding(4, 3, 4, 3);
+            butOpenFile.Name = "butOpenFile";
+            butOpenFile.Size = new Size(88, 27);
+            butOpenFile.TabIndex = 8;
+            butOpenFile.Text = "OpenFile";
+            butOpenFile.UseVisualStyleBackColor = true;
+            butOpenFile.Click += butOpenFile_Click;
             // 
             // textBoxRecInfo
             // 
-            this.textBoxRecInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxRecInfo.Location = new System.Drawing.Point(17, 251);
-            this.textBoxRecInfo.Multiline = true;
-            this.textBoxRecInfo.Name = "textBoxRecInfo";
-            this.textBoxRecInfo.ReadOnly = true;
-            this.textBoxRecInfo.Size = new System.Drawing.Size(266, 169);
-            this.textBoxRecInfo.TabIndex = 7;
+            textBoxRecInfo.BorderStyle = BorderStyle.FixedSingle;
+            textBoxRecInfo.Location = new Point(16, 445);
+            textBoxRecInfo.Margin = new Padding(4, 3, 4, 3);
+            textBoxRecInfo.Multiline = true;
+            textBoxRecInfo.Name = "textBoxRecInfo";
+            textBoxRecInfo.ReadOnly = true;
+            textBoxRecInfo.Size = new Size(310, 195);
+            textBoxRecInfo.TabIndex = 7;
             // 
             // labRecordSize
             // 
-            this.labRecordSize.AutoSize = true;
-            this.labRecordSize.Location = new System.Drawing.Point(96, 154);
-            this.labRecordSize.Name = "labRecordSize";
-            this.labRecordSize.Size = new System.Drawing.Size(35, 13);
-            this.labRecordSize.TabIndex = 6;
-            this.labRecordSize.Text = "label2";
-            this.labRecordSize.Visible = false;
+            labRecordSize.AutoSize = true;
+            labRecordSize.Location = new Point(109, 410);
+            labRecordSize.Margin = new Padding(4, 0, 4, 0);
+            labRecordSize.Name = "labRecordSize";
+            labRecordSize.Size = new Size(38, 15);
+            labRecordSize.TabIndex = 6;
+            labRecordSize.Text = "label2";
+            labRecordSize.Visible = false;
             // 
             // butSaveRecord
             // 
-            this.butSaveRecord.Location = new System.Drawing.Point(13, 154);
-            this.butSaveRecord.Name = "butSaveRecord";
-            this.butSaveRecord.Size = new System.Drawing.Size(75, 23);
-            this.butSaveRecord.TabIndex = 5;
-            this.butSaveRecord.Text = "Save record";
-            this.butSaveRecord.UseVisualStyleBackColor = true;
-            this.butSaveRecord.Click += new System.EventHandler(this.butSaveRecord_Click);
+            butSaveRecord.Location = new Point(12, 410);
+            butSaveRecord.Margin = new Padding(4, 3, 4, 3);
+            butSaveRecord.Name = "butSaveRecord";
+            butSaveRecord.Size = new Size(88, 27);
+            butSaveRecord.TabIndex = 5;
+            butSaveRecord.Text = "Save record";
+            butSaveRecord.UseVisualStyleBackColor = true;
+            butSaveRecord.Click += butSaveRecord_Click;
             // 
             // butStartRecord
             // 
-            this.butStartRecord.Location = new System.Drawing.Point(13, 125);
-            this.butStartRecord.Name = "butStartRecord";
-            this.butStartRecord.Size = new System.Drawing.Size(75, 23);
-            this.butStartRecord.TabIndex = 4;
-            this.butStartRecord.Text = "Start record";
-            this.butStartRecord.UseVisualStyleBackColor = true;
-            this.butStartRecord.Click += new System.EventHandler(this.butStartRecord_Click);
+            butStartRecord.Location = new Point(12, 376);
+            butStartRecord.Margin = new Padding(4, 3, 4, 3);
+            butStartRecord.Name = "butStartRecord";
+            butStartRecord.Size = new Size(88, 27);
+            butStartRecord.TabIndex = 4;
+            butStartRecord.Text = "Start record";
+            butStartRecord.UseVisualStyleBackColor = true;
+            butStartRecord.Click += butStartRecord_Click;
             // 
             // butSettings
             // 
-            this.butSettings.Location = new System.Drawing.Point(204, 9);
-            this.butSettings.Name = "butSettings";
-            this.butSettings.Size = new System.Drawing.Size(75, 23);
-            this.butSettings.TabIndex = 0;
-            this.butSettings.Text = "Settings";
-            this.butSettings.UseVisualStyleBackColor = true;
-            this.butSettings.Click += new System.EventHandler(this.butSettings_Click);
+            butSettings.Location = new Point(238, 10);
+            butSettings.Margin = new Padding(4, 3, 4, 3);
+            butSettings.Name = "butSettings";
+            butSettings.Size = new Size(88, 27);
+            butSettings.TabIndex = 0;
+            butSettings.Text = "Settings";
+            butSettings.UseVisualStyleBackColor = true;
+            butSettings.Click += butSettings_Click;
             // 
             // hScrollBar1
             // 
-            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Location = new System.Drawing.Point(340, 442);
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(504, 20);
-            this.hScrollBar1.TabIndex = 2;
-            this.hScrollBar1.Visible = false;
-            this.hScrollBar1.ValueChanged += new System.EventHandler(this.hScrollBar1_ValueChanged);
+            hScrollBar1.Dock = DockStyle.Bottom;
+            hScrollBar1.Location = new Point(397, 708);
+            hScrollBar1.Name = "hScrollBar1";
+            hScrollBar1.Size = new Size(588, 20);
+            hScrollBar1.TabIndex = 2;
+            hScrollBar1.Visible = false;
+            hScrollBar1.ValueChanged += hScrollBar1_ValueChanged;
             // 
             // labConnected
             // 
-            this.labConnected.AutoSize = true;
-            this.labConnected.Dock = System.Windows.Forms.DockStyle.Left;
-            this.labConnected.Location = new System.Drawing.Point(3, 437);
-            this.labConnected.Name = "labConnected";
-            this.labConnected.Size = new System.Drawing.Size(73, 25);
-            this.labConnected.TabIndex = 3;
-            this.labConnected.Text = "Disconnected";
+            labConnected.AutoSize = true;
+            labConnected.Dock = DockStyle.Left;
+            labConnected.Location = new Point(4, 699);
+            labConnected.Margin = new Padding(4, 0, 4, 0);
+            labConnected.Name = "labConnected";
+            labConnected.Size = new Size(79, 29);
+            labConnected.TabIndex = 3;
+            labConnected.Text = "Disconnected";
             // 
             // panelAmp
             // 
-            this.panelAmp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelAmp.Location = new System.Drawing.Point(303, 3);
-            this.panelAmp.Name = "panelAmp";
-            this.panelAmp.Size = new System.Drawing.Size(34, 431);
-            this.panelAmp.TabIndex = 4;
+            panelAmp.Dock = DockStyle.Fill;
+            panelAmp.Location = new Point(354, 3);
+            panelAmp.Margin = new Padding(4, 3, 4, 3);
+            panelAmp.Name = "panelAmp";
+            panelAmp.Size = new Size(39, 693);
+            panelAmp.TabIndex = 4;
             // 
             // panel1
             // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(343, 465);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(498, 34);
-            this.panel1.TabIndex = 5;
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(401, 731);
+            panel1.Margin = new Padding(4, 3, 4, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(580, 40);
+            panel1.TabIndex = 5;
             // 
             // timerPaint
             // 
-            this.timerPaint.Enabled = true;
-            this.timerPaint.Interval = 110;
-            this.timerPaint.Tick += new System.EventHandler(this.timerPaint_Tick);
+            timerPaint.Enabled = true;
+            timerPaint.Interval = 110;
+            timerPaint.Tick += timerPaint_Tick;
             // 
             // timerStatus
             // 
-            this.timerStatus.Enabled = true;
-            this.timerStatus.Interval = 500;
-            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
+            timerStatus.Enabled = true;
+            timerStatus.Interval = 500;
+            timerStatus.Tick += timerStatus_Tick;
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+            openFileDialog1.FileName = "openFileDialog1";
+            openFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.DefaultExt = "txt";
-            this.saveFileDialog1.ValidateNames = false;
+            saveFileDialog1.DefaultExt = "txt";
+            saveFileDialog1.ValidateNames = false;
             // 
             // timerDelay
             // 
-            this.timerDelay.Interval = 1000;
-            this.timerDelay.Tick += new System.EventHandler(this.timerDelay_Tick);
+            timerDelay.Interval = 1000;
+            timerDelay.Tick += timerDelay_Tick;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 502);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(860, 540);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            this.panelButtons.ResumeLayout(false);
-            this.panelButtons.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDplevel2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDplevel1)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(985, 774);
+            Controls.Add(tableLayoutPanel1);
+            Margin = new Padding(4, 3, 4, 3);
+            MinimumSize = new Size(1001, 617);
+            Name = "Form1";
+            Text = "Form1";
+            FormClosing += Form1_FormClosing;
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            panelButtons.ResumeLayout(false);
+            panelButtons.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numUDplevel4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numUDplevel3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numUDplevel2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numUDplevel1).EndInit();
+            ResumeLayout(false);
 
         }
 
@@ -575,12 +813,28 @@
         private System.Windows.Forms.Button butBPmeas2;
         private System.Windows.Forms.Label labBP2;
         private System.Windows.Forms.Label labBP1;
-        private System.Windows.Forms.Button butPumpsStop;
-        private System.Windows.Forms.Button butPumpsStart;
+        private System.Windows.Forms.Button butPumps12Stop;
+        private System.Windows.Forms.Button butPumps12Start;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Timer timerDelay;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
+        private Label labBP4;
+        private Label labBP3;
+        private Button butBPabort4;
+        private Button butBPmeas4;
+        private Button butBPabort3;
+        private Button butBPmeas3;
+        private Button butPumps34Stop;
+        private Button butPumps34Start;
+        private Button butPump4stop;
+        private Button butPump4start;
+        private Button butPump3stop;
+        private Button butPump3start;
+        private Label label4;
+        private NumericUpDown numUDplevel4;
+        private Label label5;
+        private NumericUpDown numUDplevel3;
     }
 }
 

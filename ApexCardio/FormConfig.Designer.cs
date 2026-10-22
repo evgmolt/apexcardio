@@ -28,228 +28,269 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.butOk = new System.Windows.Forms.Button();
-            this.butCancel = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.numUDRecLen = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.CB_Filter = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.numUDStartDelay = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDRecLen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDStartDelay)).BeginInit();
-            this.SuspendLayout();
+            butOk = new Button();
+            butCancel = new Button();
+            checkBox1 = new CheckBox();
+            checkBox2 = new CheckBox();
+            checkBox3 = new CheckBox();
+            checkBox4 = new CheckBox();
+            checkBox5 = new CheckBox();
+            checkBox6 = new CheckBox();
+            checkBox9 = new CheckBox();
+            label1 = new Label();
+            label2 = new Label();
+            numUDRecLen = new NumericUpDown();
+            folderBrowserDialog1 = new FolderBrowserDialog();
+            CB_Filter = new CheckBox();
+            label4 = new Label();
+            numUDStartDelay = new NumericUpDown();
+            checkBox8 = new CheckBox();
+            checkBox7 = new CheckBox();
+            checkBox10 = new CheckBox();
+            checkBox11 = new CheckBox();
+            ((System.ComponentModel.ISupportInitialize)numUDRecLen).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numUDStartDelay).BeginInit();
+            SuspendLayout();
             // 
             // butOk
             // 
-            this.butOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.butOk.Location = new System.Drawing.Point(413, 12);
-            this.butOk.Name = "butOk";
-            this.butOk.Size = new System.Drawing.Size(75, 23);
-            this.butOk.TabIndex = 0;
-            this.butOk.Text = "OK";
-            this.butOk.UseVisualStyleBackColor = true;
-            this.butOk.Click += new System.EventHandler(this.butOk_Click);
+            butOk.DialogResult = DialogResult.OK;
+            butOk.Location = new Point(482, 14);
+            butOk.Margin = new Padding(4, 3, 4, 3);
+            butOk.Name = "butOk";
+            butOk.Size = new Size(88, 27);
+            butOk.TabIndex = 0;
+            butOk.Text = "OK";
+            butOk.UseVisualStyleBackColor = true;
+            butOk.Click += butOk_Click;
             // 
             // butCancel
             // 
-            this.butCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.butCancel.Location = new System.Drawing.Point(413, 50);
-            this.butCancel.Name = "butCancel";
-            this.butCancel.Size = new System.Drawing.Size(75, 23);
-            this.butCancel.TabIndex = 1;
-            this.butCancel.Text = "Cancel";
-            this.butCancel.UseVisualStyleBackColor = true;
+            butCancel.DialogResult = DialogResult.Cancel;
+            butCancel.Location = new Point(482, 58);
+            butCancel.Margin = new Padding(4, 3, 4, 3);
+            butCancel.Name = "butCancel";
+            butCancel.Size = new Size(88, 27);
+            butCancel.TabIndex = 1;
+            butCancel.Text = "Cancel";
+            butCancel.UseVisualStyleBackColor = true;
             // 
             // checkBox1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 30);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(57, 17);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "ECG 1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(14, 35);
+            checkBox1.Margin = new Padding(4, 3, 4, 3);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(57, 19);
+            checkBox1.TabIndex = 2;
+            checkBox1.Text = "ECG 1";
+            checkBox1.UseVisualStyleBackColor = true;
             // 
             // checkBox2
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(12, 53);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(57, 17);
-            this.checkBox2.TabIndex = 3;
-            this.checkBox2.Text = "ECG 2";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new Point(14, 61);
+            checkBox2.Margin = new Padding(4, 3, 4, 3);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new Size(57, 19);
+            checkBox2.TabIndex = 3;
+            checkBox2.Text = "ECG 2";
+            checkBox2.UseVisualStyleBackColor = true;
             // 
             // checkBox3
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(12, 76);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(78, 17);
-            this.checkBox3.TabIndex = 4;
-            this.checkBox3.Text = "Reogram 1";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            checkBox3.AutoSize = true;
+            checkBox3.Location = new Point(14, 88);
+            checkBox3.Margin = new Padding(4, 3, 4, 3);
+            checkBox3.Name = "checkBox3";
+            checkBox3.Size = new Size(83, 19);
+            checkBox3.TabIndex = 4;
+            checkBox3.Text = "Reogram 1";
+            checkBox3.UseVisualStyleBackColor = true;
             // 
             // checkBox4
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(12, 99);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(78, 17);
-            this.checkBox4.TabIndex = 5;
-            this.checkBox4.Text = "Reogram 2";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            checkBox4.AutoSize = true;
+            checkBox4.Location = new Point(14, 114);
+            checkBox4.Margin = new Padding(4, 3, 4, 3);
+            checkBox4.Name = "checkBox4";
+            checkBox4.Size = new Size(83, 19);
+            checkBox4.TabIndex = 5;
+            checkBox4.Text = "Reogram 2";
+            checkBox4.UseVisualStyleBackColor = true;
             // 
             // checkBox5
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(12, 122);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(99, 17);
-            this.checkBox5.TabIndex = 6;
-            this.checkBox5.Text = "Sphigmogram 1";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            checkBox5.AutoSize = true;
+            checkBox5.Location = new Point(14, 141);
+            checkBox5.Margin = new Padding(4, 3, 4, 3);
+            checkBox5.Name = "checkBox5";
+            checkBox5.Size = new Size(111, 19);
+            checkBox5.TabIndex = 6;
+            checkBox5.Text = "Sphigmogram 1";
+            checkBox5.UseVisualStyleBackColor = true;
             // 
             // checkBox6
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(12, 145);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(99, 17);
-            this.checkBox6.TabIndex = 7;
-            this.checkBox6.Text = "Sphigmogram 2";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            checkBox6.AutoSize = true;
+            checkBox6.Location = new Point(14, 167);
+            checkBox6.Margin = new Padding(4, 3, 4, 3);
+            checkBox6.Name = "checkBox6";
+            checkBox6.Size = new Size(111, 19);
+            checkBox6.TabIndex = 7;
+            checkBox6.Text = "Sphigmogram 2";
+            checkBox6.UseVisualStyleBackColor = true;
             // 
-            // checkBox7
+            // checkBox9
             // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Location = new System.Drawing.Point(12, 168);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(105, 17);
-            this.checkBox7.TabIndex = 8;
-            this.checkBox7.Text = "Apex cardiogram";
-            this.checkBox7.UseVisualStyleBackColor = true;
+            checkBox9.AutoSize = true;
+            checkBox9.Location = new Point(14, 243);
+            checkBox9.Margin = new Padding(4, 3, 4, 3);
+            checkBox9.Name = "checkBox9";
+            checkBox9.Size = new Size(117, 19);
+            checkBox9.TabIndex = 8;
+            checkBox9.Text = "Apex cardiogram";
+            checkBox9.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 13);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "View:";
+            label1.AutoSize = true;
+            label1.Location = new Point(14, 10);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(35, 15);
+            label1.TabIndex = 9;
+            label1.Text = "View:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 218);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(97, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Record length, sec";
+            label2.AutoSize = true;
+            label2.Location = new Point(395, 275);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(104, 15);
+            label2.TabIndex = 10;
+            label2.Text = "Record length, sec";
             // 
             // numUDRecLen
             // 
-            this.numUDRecLen.Location = new System.Drawing.Point(112, 216);
-            this.numUDRecLen.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numUDRecLen.Minimum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numUDRecLen.Name = "numUDRecLen";
-            this.numUDRecLen.Size = new System.Drawing.Size(46, 20);
-            this.numUDRecLen.TabIndex = 11;
-            this.numUDRecLen.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 277);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Archiver 7z path";
+            numUDRecLen.Location = new Point(516, 272);
+            numUDRecLen.Margin = new Padding(4, 3, 4, 3);
+            numUDRecLen.Maximum = new decimal(new int[] { 20, 0, 0, 0 });
+            numUDRecLen.Minimum = new decimal(new int[] { 3, 0, 0, 0 });
+            numUDRecLen.Name = "numUDRecLen";
+            numUDRecLen.Size = new Size(54, 23);
+            numUDRecLen.TabIndex = 11;
+            numUDRecLen.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // CB_Filter
             // 
-            this.CB_Filter.AutoSize = true;
-            this.CB_Filter.Location = new System.Drawing.Point(12, 308);
-            this.CB_Filter.Name = "CB_Filter";
-            this.CB_Filter.Size = new System.Drawing.Size(48, 17);
-            this.CB_Filter.TabIndex = 15;
-            this.CB_Filter.Text = "Filter";
-            this.CB_Filter.UseVisualStyleBackColor = true;
+            CB_Filter.AutoSize = true;
+            CB_Filter.Location = new Point(399, 378);
+            CB_Filter.Margin = new Padding(4, 3, 4, 3);
+            CB_Filter.Name = "CB_Filter";
+            CB_Filter.Size = new Size(52, 19);
+            CB_Filter.TabIndex = 15;
+            CB_Filter.Text = "Filter";
+            CB_Filter.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 248);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 13);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "Start delay, sec";
+            label4.AutoSize = true;
+            label4.Location = new Point(399, 309);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(85, 15);
+            label4.TabIndex = 16;
+            label4.Text = "Start delay, sec";
             // 
             // numUDStartDelay
             // 
-            this.numUDStartDelay.Location = new System.Drawing.Point(112, 246);
-            this.numUDStartDelay.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numUDStartDelay.Name = "numUDStartDelay";
-            this.numUDStartDelay.Size = new System.Drawing.Size(46, 20);
-            this.numUDStartDelay.TabIndex = 17;
+            numUDStartDelay.Location = new Point(516, 307);
+            numUDStartDelay.Margin = new Padding(4, 3, 4, 3);
+            numUDStartDelay.Maximum = new decimal(new int[] { 20, 0, 0, 0 });
+            numUDStartDelay.Name = "numUDStartDelay";
+            numUDStartDelay.Size = new Size(54, 23);
+            numUDStartDelay.TabIndex = 17;
+            // 
+            // checkBox8
+            // 
+            checkBox8.AutoSize = true;
+            checkBox8.Location = new Point(14, 218);
+            checkBox8.Margin = new Padding(4, 3, 4, 3);
+            checkBox8.Name = "checkBox8";
+            checkBox8.Size = new Size(111, 19);
+            checkBox8.TabIndex = 19;
+            checkBox8.Text = "Sphigmogram 4";
+            checkBox8.UseVisualStyleBackColor = true;
+            // 
+            // checkBox7
+            // 
+            checkBox7.AutoSize = true;
+            checkBox7.Location = new Point(14, 192);
+            checkBox7.Margin = new Padding(4, 3, 4, 3);
+            checkBox7.Name = "checkBox7";
+            checkBox7.Size = new Size(111, 19);
+            checkBox7.TabIndex = 18;
+            checkBox7.Text = "Sphigmogram 3";
+            checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // checkBox10
+            // 
+            checkBox10.AutoSize = true;
+            checkBox10.Location = new Point(14, 271);
+            checkBox10.Margin = new Padding(4, 3, 4, 3);
+            checkBox10.Name = "checkBox10";
+            checkBox10.Size = new Size(48, 19);
+            checkBox10.TabIndex = 20;
+            checkBox10.Text = "PPG";
+            checkBox10.UseVisualStyleBackColor = true;
+            // 
+            // checkBox11
+            // 
+            checkBox11.AutoSize = true;
+            checkBox11.Location = new Point(14, 296);
+            checkBox11.Margin = new Padding(4, 3, 4, 3);
+            checkBox11.Name = "checkBox11";
+            checkBox11.Size = new Size(60, 19);
+            checkBox11.TabIndex = 21;
+            checkBox11.Text = "Sound";
+            checkBox11.UseVisualStyleBackColor = true;
             // 
             // FormConfig
             // 
-            this.AcceptButton = this.butOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.butCancel;
-            this.ClientSize = new System.Drawing.Size(500, 353);
-            this.Controls.Add(this.numUDStartDelay);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.CB_Filter);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.numUDRecLen);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.checkBox7);
-            this.Controls.Add(this.checkBox6);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.butCancel);
-            this.Controls.Add(this.butOk);
-            this.KeyPreview = true;
-            this.Name = "FormConfig";
-            this.Text = "Settings";
-            ((System.ComponentModel.ISupportInitialize)(this.numUDRecLen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numUDStartDelay)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AcceptButton = butOk;
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = butCancel;
+            ClientSize = new Size(583, 407);
+            Controls.Add(checkBox11);
+            Controls.Add(checkBox10);
+            Controls.Add(checkBox8);
+            Controls.Add(checkBox7);
+            Controls.Add(numUDStartDelay);
+            Controls.Add(label4);
+            Controls.Add(CB_Filter);
+            Controls.Add(numUDRecLen);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(checkBox9);
+            Controls.Add(checkBox6);
+            Controls.Add(checkBox5);
+            Controls.Add(checkBox4);
+            Controls.Add(checkBox3);
+            Controls.Add(checkBox2);
+            Controls.Add(checkBox1);
+            Controls.Add(butCancel);
+            Controls.Add(butOk);
+            KeyPreview = true;
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "FormConfig";
+            Text = "Settings";
+            ((System.ComponentModel.ISupportInitialize)numUDRecLen).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numUDStartDelay).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
@@ -263,14 +304,17 @@
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.CheckBox checkBox9;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numUDRecLen;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.CheckBox CB_Filter;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numUDStartDelay;
+        private CheckBox checkBox8;
+        private CheckBox checkBox7;
+        private CheckBox checkBox10;
+        private CheckBox checkBox11;
     }
 }

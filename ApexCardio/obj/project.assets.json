@@ -1768,9 +1768,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VS\\ApexCardio\\ApexCardio\\ApexCardio.csproj",
-      "projectName": "ApexCardio",
-      "projectPath": "D:\\VS\\ApexCardio\\ApexCardio\\ApexCardio.csproj",
+      "projectUniqueName": "D:\\VS\\ApexCardio\\ApexCardio\\Polycardio2.csproj",
+      "projectName": "Polycardio2",
+      "projectPath": "D:\\VS\\ApexCardio\\ApexCardio\\Polycardio2.csproj",
       "packagesPath": "C:\\Users\\emolchkov\\.nuget\\packages\\",
       "outputPath": "D:\\VS\\ApexCardio\\ApexCardio\\obj\\",
       "projectStyle": "PackageReference",

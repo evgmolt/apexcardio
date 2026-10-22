@@ -16,7 +16,9 @@ namespace ApexCardio
         public int WindowWidth { get; set; } 
         public int WindowHeight { get; set; } 
         public byte PressLevel1 { get; set; }  
-        public byte PressLevel2 { get; set; } 
+        public byte PressLevel2 { get; set; }
+        public byte PressLevel3 { get; set; }
+        public byte PressLevel4 { get; set; }
         public int RecordLength { get; set; }
         public bool FilterOn { get; set; }
         public int StartDelay { get; set; }
@@ -26,7 +28,7 @@ namespace ApexCardio
         public ApexConfig()
         {
             VisibleGraphs = new bool[ApexConstants.NumOfChannels];
-            DataDir = Directory.GetCurrentDirectory() + @"\Data\";
+            DataDir = Directory.GetCurrentDirectory();
             DataFileNum = 0;
             CreateTextFile = true;
             Maximized = true;
@@ -34,6 +36,8 @@ namespace ApexCardio
             WindowHeight = 500;
             PressLevel1 = 50;
             PressLevel2 = 50;
+            PressLevel3 = 50;
+            PressLevel4 = 50;
             RecordLength = 10;
             FilterOn = true;
             StartDelay = 10;

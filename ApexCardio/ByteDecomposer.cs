@@ -19,6 +19,7 @@ namespace ApexCardio
         public int[] SphigmoRightLegArray;
         public int[] ApexArray;
         public int[] PPGArray;
+        public short[] SoundArray;
 
         public int[] ECG1ViewArray;
         public int[] ECG2ViewArray;
@@ -29,8 +30,8 @@ namespace ApexCardio
         public int[] SphigmoRightHandViewArray;
         public int[] SphigmoRightLegViewArray;
         public int[] ApexViewArray;
-        public int[] ApexPPGArray;
-        public short[] SoundArray;
+        public int[] PPGViewArray;
+        public int[] SoundViewArray;
 
         public List<int[]> ViewList;
         
@@ -59,9 +60,13 @@ namespace ApexCardio
             Reo2Array = new int[size];
             SphigmoLeftHandArray = new int[size];
             SphigmoLeftLegArray = new int[size];
+            SphigmoRightHandArray = new int[size];
+            SphigmoRightLegArray = new int[size];
             ApexArray = new int[size];
+            PPGArray = new int[size];
+            SoundArray = new short[size * 8];
 
-            
+
             ECG1ViewArray = new int[size];
             ECG2ViewArray = new int[size];
             Reo1ViewArray = new int[size];
@@ -71,7 +76,8 @@ namespace ApexCardio
             SphigmoRightHandViewArray = new int[size];
             SphigmoRightLegViewArray = new int[size];
             ApexViewArray = new int[size];
-            SoundArray = new short[size * 8];
+            PPGViewArray = new int[size];
+            SoundViewArray = new int[size * 8];
 
             ViewList = new List<int[]>();
             ViewList.Add(ECG1ViewArray);
@@ -83,6 +89,8 @@ namespace ApexCardio
             ViewList.Add(SphigmoRightHandViewArray);
             ViewList.Add(SphigmoRightLegViewArray);
             ViewList.Add(ApexViewArray);
+            ViewList.Add(PPGViewArray);
+            ViewList.Add(SoundViewArray);
 
             RArray = new int[RRMaxNum];
             RInd = 0;
@@ -177,8 +185,12 @@ namespace ApexCardio
         public bool BP2measStarted;
         public bool Pump1Started;
         public bool Pump2Started;
+        public bool Pump3Started;
+        public bool Pump4Started;
         private bool Pump1RealyStarted;
         private bool Pump2RealyStarted;
+        private bool Pump3RealyStarted;
+        private bool Pump4RealyStarted;
 
         private int DelayCounter1;
         private int DelayCounter2;
@@ -196,8 +208,12 @@ namespace ApexCardio
             BP2measStarted = false;
             Pump1Started = false;
             Pump2Started = false;
+            Pump3Started = false;
+            Pump4Started = false;
             Pump1RealyStarted = false;
             Pump2RealyStarted = false;
+            Pump3RealyStarted = false;
+            Pump4RealyStarted = false;
             RecordStarted = false;
             DeviceTurnedOn = true;
             DTOCounter = 0;
@@ -366,7 +382,7 @@ namespace ApexCardio
 
             // --- Фотоплетизмограмма (PPG) ---
             // Записываем отфильтрованное или сырое значение в отображаемый массив ApexPPGArray
-            Data.ApexPPGArray[MainIndex] = Data.PPGArray[MainIndex];
+            Data.ApexViewArray[MainIndex] = Data.PPGArray[MainIndex];
         }
 
         private void ParseFullPacket(ReadOnlySpan<byte> packet, ApexConfig cfg)
@@ -482,7 +498,7 @@ namespace ApexCardio
                 case DeviceStatusId.PPG_Error:
                     // Ошибка фотоплетизмограммы (нет пациента). 
                     // Зануляем отображение PPG, чтобы на графике не было шумов
-                    Data.ApexPPGArray[MainIndex] = 0;
+                    Data.ApexViewArray[MainIndex] = 0;
                     // Здесь можно взвести флаг "Датчик PPG отключен" для вывода предупреждения пользователю
                     break;
 

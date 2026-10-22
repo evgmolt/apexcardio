@@ -99,30 +99,24 @@ namespace ApexCardio
         //Return array of port names with VCP string;
         private string[] GetPortsNames()
         {
-            const string VCP = "USBSER";
-
+            const string VCP = "\\Device\\Serial";
+            const string VCP0 = "\\Device\\Serial0";
+    
             RegistryKey r_hklm = Registry.LocalMachine;
             RegistryKey r_hard = r_hklm.OpenSubKey("HARDWARE");
             RegistryKey r_device = r_hard.OpenSubKey("DEVICEMAP");
             RegistryKey r_port = r_device.OpenSubKey("SERIALCOMM");
             if (r_port == null) return null;
             string[] portvalues = r_port.GetValueNames();
-            int numOfVCP = 0;
-            for (int i = 0; i < portvalues.Count(); i++)
+            List<string> portNames = new List<string>();
+            for (int i = 0; i < portvalues.Length; i++)
             {
-                if (portvalues[i].IndexOf(VCP) >= 0) numOfVCP++;
-            }
-            string[] pn = new string[numOfVCP];
-            int Ind = 0;
-            for (int i = 0; i < portvalues.Count(); i++)
-            {
-                if (portvalues[i].IndexOf(VCP) >= 0)
+                if (portvalues[i].IndexOf(VCP) >= 0 && portvalues[i].IndexOf(VCP) < 0)
                 {
-                    pn[Ind] = (string)r_port.GetValue(portvalues[i]);
-                    Ind++;
+                    portNames.Add((string)r_port.GetValue(portvalues[i]));
                 }
             }
-            return pn;
+            return portNames.ToArray();
         }
 
         private void onMessage(Message m)

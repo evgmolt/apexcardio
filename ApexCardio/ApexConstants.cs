@@ -7,7 +7,8 @@ namespace ApexCardio
 {
     static class ApexConstants
     {
-        public const int NumOfChannels = 7;
+        public const int NumOfChannels = 11;
+        public const int NumOfAmpBars = 7;
         public const byte M1 = 0xE6;
         public const byte ID = 0x61;
         public const byte cmGetID = 0x5A;
