@@ -28,6 +28,7 @@ namespace ApexCardio
         private int BaudRate;
 
         public event Action<Exception> ConnectionFailure;
+        public event Action ConnectionOk;
 
         private void ReadPort(object state)
         {
@@ -80,6 +81,7 @@ namespace ApexCardio
                 try
                 {
                     PortHandle.Open();
+                    ConnectionOk?.Invoke();
                 }
                 catch (Exception e)
                 {
@@ -100,6 +102,7 @@ namespace ApexCardio
         private string[] GetPortsNames()
         {
             const string VCP = "\\Device\\Serial";
+//            const string VCP = "USBSER";
             const string VCP0 = "\\Device\\Serial0";
     
             RegistryKey r_hklm = Registry.LocalMachine;
@@ -111,7 +114,7 @@ namespace ApexCardio
             List<string> portNames = new List<string>();
             for (int i = 0; i < portvalues.Length; i++)
             {
-                if (portvalues[i].IndexOf(VCP) >= 0 && portvalues[i].IndexOf(VCP) < 0)
+                if (portvalues[i].IndexOf(VCP) >= 0 && portvalues[i].IndexOf(VCP0) < 0)
                 {
                     portNames.Add((string)r_port.GetValue(portvalues[i]));
                 }

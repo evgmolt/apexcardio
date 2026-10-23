@@ -116,15 +116,6 @@ namespace ApexCardio
         public const int DataArrSize = 0x100000;
         public const int DataArrSizeForView = 4000;
 
-        public const byte bp1completed = 1;
-        public const byte bp2completed = 2;
-        public const byte bp1error = 4;
-        public const byte bp2error = 8;
-        public const byte bp1progress = 16;
-        public const byte bp2progress = 32;
-        public const byte pump1progress = 64;
-        public const byte pump2progress = 128;
-
         private int ECG1tmp;
         private int ECG2tmp;
         private int Reo1tmp;
@@ -169,7 +160,11 @@ namespace ApexCardio
         public int PrDIA1;
         public int PrSYS2;
         public int PrDIA2;
-        public byte Status;
+        public int PrSYS3;
+        public int PrDIA3;
+        public int PrSYS4;
+        public int PrDIA4;
+        public DeviceStatusFlags Status;
 
         public uint MainIndex = 0;
         public int LineCounter = 0;
@@ -183,6 +178,8 @@ namespace ApexCardio
         private int DTOCounter;
         public bool BP1measStarted;
         public bool BP2measStarted;
+        public bool BP3measStarted;
+        public bool BP4measStarted;
         public bool Pump1Started;
         public bool Pump2Started;
         public bool Pump3Started;
@@ -435,6 +432,7 @@ namespace ApexCardio
 
                 // 3-байтовый статус
                 Data.DeviceStatus = packet[64] | (packet[65] << 8) | (packet[66] << 16);
+                Status = (DeviceStatusFlags) Data.DeviceStatus;
                 ProcessDeviceStatus(); // Выносим логику насосов и OnBPcompleted сюда
             }
         }
@@ -446,9 +444,11 @@ namespace ApexCardio
             DeviceStatusId currentStatus = (DeviceStatusId)statusCode;
 
             // --- Интеграция с вашей старой логикой компрессоров (по битовым маскам) ---
-            BP1measStarted = ((Data.DeviceStatus & bp1progress) != 0);
-            BP2measStarted = ((Data.DeviceStatus & bp2progress) != 0);
-
+            BP1measStarted = Status.HasFlag(DeviceStatusFlags.dsBP1_InProgress);
+            BP2measStarted = Status.HasFlag(DeviceStatusFlags.dsBP2_InProgress);
+            BP3measStarted = Status.HasFlag(DeviceStatusFlags.dsBP3_InProgress);
+            BP4measStarted = Status.HasFlag(DeviceStatusFlags.dsBP4_InProgress);
+/*
             // Модуль давления 1 (Левая рука)
             if (Pump1Started && (Data.DeviceStatus & pump1progress) != 0) Pump1RealyStarted = true;
             if (Pump1RealyStarted) Data.SphigmoLeftHandViewArray[MainIndex] = 0;
@@ -474,7 +474,7 @@ namespace ApexCardio
                     Pump2Started = false; Pump2RealyStarted = false; detrendSphigmo2 = 0; DelayCounter2 = 0;
                 }
             }
-
+*/
             // --- Новая логика обработки состояний прибора на основе таблицы ---
             switch (currentStatus)
             {
@@ -510,10 +510,20 @@ namespace ApexCardio
                     break;
 
                 case DeviceStatusId.BP1_OK:
+                    PrSYS1 = Data.NIBP1_Syst;
+                    PrDIA1 = Data.NIBP1_Diast;
+                    break;
                 case DeviceStatusId.BP2_OK:
+                    PrSYS2 = Data.NIBP2_Syst;
+                    PrDIA2 = Data.NIBP2_Diast;
+                    break;
                 case DeviceStatusId.BP3_OK:
+                    PrSYS3 = Data.NIBP3_Syst;
+                    PrDIA3 = Data.NIBP3_Diast;
+                    break;
                 case DeviceStatusId.BP4_OK:
-                    // Обработка успешного завершения измерения АД
+                    PrSYS4 = Data.NIBP4_Syst;
+                    PrDIA4 = Data.NIBP4_Diast;
                     break;
             }
 

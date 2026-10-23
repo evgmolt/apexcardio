@@ -33,6 +33,7 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             panelGraph = new Panel();
             panelButtons = new Panel();
+            butStartFlow = new Button();
             butPumps34Stop = new Button();
             butPumps34Start = new Button();
             butPump4stop = new Button();
@@ -49,7 +50,6 @@
             butBPmeas4 = new Button();
             butBPabort3 = new Button();
             butBPmeas3 = new Button();
-            label1 = new Label();
             butPumps12Stop = new Button();
             butPumps12Start = new Button();
             labBP2 = new Label();
@@ -73,7 +73,7 @@
             labP2 = new Label();
             labP1 = new Label();
             butEditRecInfo = new Button();
-            butFlow = new Button();
+            butStopFlow = new Button();
             butOpenFile = new Button();
             textBoxRecInfo = new TextBox();
             labRecordSize = new Label();
@@ -89,6 +89,10 @@
             openFileDialog1 = new OpenFileDialog();
             saveFileDialog1 = new SaveFileDialog();
             timerDelay = new System.Windows.Forms.Timer(components);
+            labPressure1 = new Label();
+            labPressure2 = new Label();
+            labPressure3 = new Label();
+            labPressure4 = new Label();
             tableLayoutPanel1.SuspendLayout();
             panelButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numUDplevel4).BeginInit();
@@ -105,8 +109,8 @@
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 350F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 47F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 400F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 45F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.Controls.Add(panelGraph, 2, 0);
             tableLayoutPanel1.Controls.Add(panelButtons, 0, 0);
@@ -128,15 +132,20 @@
             // panelGraph
             // 
             panelGraph.Dock = DockStyle.Fill;
-            panelGraph.Location = new Point(401, 3);
+            panelGraph.Location = new Point(449, 3);
             panelGraph.Margin = new Padding(4, 3, 4, 3);
             panelGraph.Name = "panelGraph";
-            panelGraph.Size = new Size(580, 693);
+            panelGraph.Size = new Size(532, 693);
             panelGraph.TabIndex = 0;
             panelGraph.Resize += panelGraph_Resize;
             // 
             // panelButtons
             // 
+            panelButtons.Controls.Add(labPressure4);
+            panelButtons.Controls.Add(labPressure3);
+            panelButtons.Controls.Add(labPressure2);
+            panelButtons.Controls.Add(labPressure1);
+            panelButtons.Controls.Add(butStartFlow);
             panelButtons.Controls.Add(butPumps34Stop);
             panelButtons.Controls.Add(butPumps34Start);
             panelButtons.Controls.Add(butPump4stop);
@@ -153,7 +162,6 @@
             panelButtons.Controls.Add(butBPmeas4);
             panelButtons.Controls.Add(butBPabort3);
             panelButtons.Controls.Add(butBPmeas3);
-            panelButtons.Controls.Add(label1);
             panelButtons.Controls.Add(butPumps12Stop);
             panelButtons.Controls.Add(butPumps12Start);
             panelButtons.Controls.Add(labBP2);
@@ -177,7 +185,7 @@
             panelButtons.Controls.Add(labP2);
             panelButtons.Controls.Add(labP1);
             panelButtons.Controls.Add(butEditRecInfo);
-            panelButtons.Controls.Add(butFlow);
+            panelButtons.Controls.Add(butStopFlow);
             panelButtons.Controls.Add(butOpenFile);
             panelButtons.Controls.Add(textBoxRecInfo);
             panelButtons.Controls.Add(labRecordSize);
@@ -188,8 +196,19 @@
             panelButtons.Location = new Point(4, 3);
             panelButtons.Margin = new Padding(4, 3, 4, 3);
             panelButtons.Name = "panelButtons";
-            panelButtons.Size = new Size(342, 693);
+            panelButtons.Size = new Size(392, 693);
             panelButtons.TabIndex = 1;
+            // 
+            // butStartFlow
+            // 
+            butStartFlow.Location = new Point(16, 11);
+            butStartFlow.Margin = new Padding(4, 3, 4, 3);
+            butStartFlow.Name = "butStartFlow";
+            butStartFlow.Size = new Size(88, 27);
+            butStartFlow.TabIndex = 49;
+            butStartFlow.Text = "Start flow";
+            butStartFlow.UseVisualStyleBackColor = true;
+            butStartFlow.Click += butStartFlow_Click;
             // 
             // butPumps34Stop
             // 
@@ -272,6 +291,7 @@
             numUDplevel4.Name = "numUDplevel4";
             numUDplevel4.Size = new Size(56, 23);
             numUDplevel4.TabIndex = 41;
+            numUDplevel4.ValueChanged += numUDplevel4_ValueChanged;
             // 
             // label5
             // 
@@ -290,6 +310,7 @@
             numUDplevel3.Name = "numUDplevel3";
             numUDplevel3.Size = new Size(56, 23);
             numUDplevel3.TabIndex = 39;
+            numUDplevel3.ValueChanged += numUDplevel3_ValueChanged;
             // 
             // labBP4
             // 
@@ -354,16 +375,6 @@
             butBPmeas3.Text = "Start ABP 3";
             butBPmeas3.UseVisualStyleBackColor = true;
             butBPmeas3.Click += butBPmeas3_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(135, 16);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(38, 15);
-            label1.TabIndex = 32;
-            label1.Text = "label1";
             // 
             // butPumps12Stop
             // 
@@ -607,16 +618,16 @@
             butEditRecInfo.UseVisualStyleBackColor = true;
             butEditRecInfo.Click += butEditRecInfo_Click;
             // 
-            // butFlow
+            // butStopFlow
             // 
-            butFlow.Location = new Point(15, 10);
-            butFlow.Margin = new Padding(4, 3, 4, 3);
-            butFlow.Name = "butFlow";
-            butFlow.Size = new Size(88, 27);
-            butFlow.TabIndex = 9;
-            butFlow.Text = "Stop flow";
-            butFlow.UseVisualStyleBackColor = true;
-            butFlow.Click += butFlow_Click;
+            butStopFlow.Location = new Point(115, 11);
+            butStopFlow.Margin = new Padding(4, 3, 4, 3);
+            butStopFlow.Name = "butStopFlow";
+            butStopFlow.Size = new Size(88, 27);
+            butStopFlow.TabIndex = 9;
+            butStopFlow.Text = "Stop flow";
+            butStopFlow.UseVisualStyleBackColor = true;
+            butStopFlow.Click += butStopFlow_Click;
             // 
             // butOpenFile
             // 
@@ -687,9 +698,9 @@
             // hScrollBar1
             // 
             hScrollBar1.Dock = DockStyle.Bottom;
-            hScrollBar1.Location = new Point(397, 708);
+            hScrollBar1.Location = new Point(445, 708);
             hScrollBar1.Name = "hScrollBar1";
-            hScrollBar1.Size = new Size(588, 20);
+            hScrollBar1.Size = new Size(540, 20);
             hScrollBar1.TabIndex = 2;
             hScrollBar1.Visible = false;
             hScrollBar1.ValueChanged += hScrollBar1_ValueChanged;
@@ -708,19 +719,19 @@
             // panelAmp
             // 
             panelAmp.Dock = DockStyle.Fill;
-            panelAmp.Location = new Point(354, 3);
+            panelAmp.Location = new Point(404, 3);
             panelAmp.Margin = new Padding(4, 3, 4, 3);
             panelAmp.Name = "panelAmp";
-            panelAmp.Size = new Size(39, 693);
+            panelAmp.Size = new Size(37, 693);
             panelAmp.TabIndex = 4;
             // 
             // panel1
             // 
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(401, 731);
+            panel1.Location = new Point(449, 731);
             panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(580, 40);
+            panel1.Size = new Size(532, 40);
             panel1.TabIndex = 5;
             // 
             // timerPaint
@@ -749,6 +760,42 @@
             // 
             timerDelay.Interval = 1000;
             timerDelay.Tick += timerDelay_Tick;
+            // 
+            // labPressure1
+            // 
+            labPressure1.AutoSize = true;
+            labPressure1.Location = new Point(338, 216);
+            labPressure1.Name = "labPressure1";
+            labPressure1.Size = new Size(13, 15);
+            labPressure1.TabIndex = 50;
+            labPressure1.Text = "0";
+            // 
+            // labPressure2
+            // 
+            labPressure2.AutoSize = true;
+            labPressure2.Location = new Point(338, 250);
+            labPressure2.Name = "labPressure2";
+            labPressure2.Size = new Size(13, 15);
+            labPressure2.TabIndex = 51;
+            labPressure2.Text = "0";
+            // 
+            // labPressure3
+            // 
+            labPressure3.AutoSize = true;
+            labPressure3.Location = new Point(338, 283);
+            labPressure3.Name = "labPressure3";
+            labPressure3.Size = new Size(13, 15);
+            labPressure3.TabIndex = 52;
+            labPressure3.Text = "0";
+            // 
+            // labPressure4
+            // 
+            labPressure4.AutoSize = true;
+            labPressure4.Location = new Point(338, 316);
+            labPressure4.Name = "labPressure4";
+            labPressure4.Size = new Size(13, 15);
+            labPressure4.TabIndex = 53;
+            labPressure4.Text = "0";
             // 
             // Form1
             // 
@@ -791,7 +838,7 @@
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.Panel panelAmp;
         private System.Windows.Forms.Button butOpenFile;
-        private System.Windows.Forms.Button butFlow;
+        private System.Windows.Forms.Button butStopFlow;
         private System.Windows.Forms.Button butEditRecInfo;
         private System.Windows.Forms.Label labP3;
         private System.Windows.Forms.Label labP2;
@@ -817,7 +864,6 @@
         private System.Windows.Forms.Button butPumps12Start;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Timer timerDelay;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private Label labBP4;
         private Label labBP3;
@@ -835,6 +881,11 @@
         private NumericUpDown numUDplevel4;
         private Label label5;
         private NumericUpDown numUDplevel3;
+        private Button butStartFlow;
+        private Label labPressure4;
+        private Label labPressure3;
+        private Label labPressure2;
+        private Label labPressure1;
     }
 }
 

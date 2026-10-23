@@ -23,7 +23,7 @@ namespace ApexCardio
         public bool FilterOn { get; set; }
         public int StartDelay { get; set; }
         public bool[] VisibleGraphs { get; set; }
-
+        public int[] ChannelsMaxSize {  get; set; }
 
         public ApexConfig()
         {
@@ -45,6 +45,8 @@ namespace ApexCardio
             {
                 VisibleGraphs[i] = true;
             }
+            ChannelsMaxSize = [60000, 60000, 5000, 5000, 40000, 40000, 40000, 40000, 4000, 5000, 5000 ];
+
         }
 
         public static ApexConfig GetConfig()
@@ -68,15 +70,20 @@ namespace ApexCardio
                 }
         }
 
-        public static void SaveConfig(ApexConfig cfg)
+    public static void SaveConfig(ApexConfig cfg)
+    {
+        // Использование конструкции 'using' автоматически закроет и очистит sw и writer
+        using (StreamWriter sw = new StreamWriter(ApexConstants.ConfigFileName))
+        using (JsonWriter writer = new JsonTextWriter(sw))
         {
-            StreamWriter sw = new StreamWriter(ApexConstants.ConfigFileName);
-            JsonWriter writer = new JsonTextWriter(sw);
+            // Включаем красивое форматирование (отступы и переносы строк)
+            writer.Formatting = Formatting.Indented;
+
             JsonSerializer serializer = new JsonSerializer();
             serializer.Serialize(writer, cfg);
-            writer.Close();
-            sw.Close();
         }
-
     }
+
+
+}
 }
